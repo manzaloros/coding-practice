@@ -1,2 +1,2 @@
 # coding-practice
-This repository is for practicing code.
+This repository is for my practice of code.
