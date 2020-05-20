@@ -44,3 +44,5 @@ function assertEquals(actual, expected) {
 let inputActual = digPow(46288,3);
 let inputExpected = 51;
 assertEquals(inputActual, inputExpected);
+//what evaluates to true and false?
+console.log(4 % 2 == false)
