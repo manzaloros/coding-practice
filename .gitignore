@@ -1,3 +1,4 @@
 .DS_Store
 .vscode/
 hack-reactor-mock-interview-problems/
+node_modules
