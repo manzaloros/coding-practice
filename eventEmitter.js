@@ -60,11 +60,11 @@ function response2(msg2) {
   console.log(msg2 + ' also!')
 }
 
-eventEmitter.on('HRX', responseToEvent);
-eventEmitter.once('HRX', function (msg) { console.log(msg + ' just once!'); });
-eventEmitter.emit('HRX', '1st'); // 1st \n 1st just once!
-eventEmitter.on('HRX', response2);
-eventEmitter.emit('HRX', '2nd'); // 2nd \n 2nd also!
-eventEmitter.off('HRX', responseToEvent);
-eventEmitter.emit('HRX', '3rd'); // 3rd also!
-eventEmitter.emit('HRX', '1st'); // 1st also!
+// eventEmitter.on('HRX', responseToEvent);
+// eventEmitter.once('HRX', function (msg) { console.log(msg + ' just once!'); });
+// eventEmitter.emit('HRX', '1st'); // 1st \n 1st just once!
+// eventEmitter.on('HRX', response2);
+// eventEmitter.emit('HRX', '2nd'); // 2nd \n 2nd also!
+// eventEmitter.off('HRX', responseToEvent);
+// eventEmitter.emit('HRX', '3rd'); // 3rd also!
+// eventEmitter.emit('HRX', '1st'); // 1st also!
