@@ -16,6 +16,8 @@ Note:
 
 */
 
+
+// Time complexity: O(n^2)
 const numSubarrayProductLessThanK = (nums, k) => {
   let count = 0;
   for (let i = 0; i < nums.length; i += 1) {
@@ -34,5 +36,7 @@ const numSubarrayProductLessThanK = (nums, k) => {
   }
   return count;
 }
+
+
 
 console.log(numSubarrayProductLessThanK([10, 5, 2, 6], 100))
