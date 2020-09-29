@@ -16,39 +16,19 @@ Explanation: Return true because "leetcode" can be segmented as "leet code".
 
 const wordBreak = (s, wordDict) => {
 
-  const permute = function () {
-    return permute;
+  // Represents substrings
+  const dp = new Array(s.length + 1).fill(false);
+  dp[0] = true;
 
-    function permute(list) {
-      return list.length ?
-        list.reduce(permutate, []) :
-        [[]];
-    }
-
-    function permutate(permutations, item, index, list) {
-      return permutations.concat(permute(
-        list.slice(0, index).concat(
-          list.slice(index + 1)))
-        .map(concat, [item]));
-    }
-
-    function concat(list) {
-      return this.concat(list);
-    }
-  };
-
-  const resultCombinations = [];
-  const dictionaryCombinations = permute(wordDict);
-
-  dictionaryCombinations.forEach(dictionary => {
-    let wordCopy = s;
-    wordDict.forEach((word) => {
-      while (wordCopy.includes(word)) {
-        wordCopy = wordCopy.replace(word, '');
+  for (let i = 1; i <= s.length; i++) {
+    for (let j = 0; j < i; j++) {
+      const word = s.slice(j, i);
+      if (dp[j] === true && wordDict.includes(word)) {
+        dp[i] = true;
+        break;
       }
-    });
-    resultCombinations.push(wordCopy);
-  });
+    }
+  }
 
-  return wordCopy.includes('');
+  return dp[s.length];
 }
