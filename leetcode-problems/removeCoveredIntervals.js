@@ -22,7 +22,6 @@ const removeCoveredIntervals = (intervals) => {
       }
       const compare = intervals[j];
       if (current[0] <= compare[0] && current[1] >= compare[1]) {
-        // Need to remove compare from array
         compareSet.add(compare.toString());
         coveredIntervalsCount += 1;
       }
