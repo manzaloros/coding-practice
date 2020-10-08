@@ -94,4 +94,4 @@ const rotateRight = (head, k) => {
 let list = new ListNode(1);
 list.addToTail(2);
 list.addToTail(3);
-console.log(rotateRight(list, 1));
+console.log(rotateRight(list, 2));
