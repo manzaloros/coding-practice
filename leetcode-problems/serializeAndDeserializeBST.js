@@ -73,11 +73,16 @@ const deserialize = (data) => {
   if (data.length === 0) return null;
   let values = data.split(',');
   let root = new TreeNode(values[0]);
+
   const addNode = (node, value) => {
+    // If the current value is less than the node's value
     if (value < node.val) {
+      // And if the node already has a node.left
       if (node.left) {
+        // Keep going down the tree on the left
         addNode(node.left, value);
       } else {
+        // If there isn't a node.left, make one with the value
         node.left = new TreeNode(value);
       }
     }
@@ -89,8 +94,11 @@ const deserialize = (data) => {
       }
     }
   }
+
+  // Iterates over the serialized values
   for (let i = 1; i < values.length; i += 1) {
     addNode(root, +values[i]);
   }
+
   return root;
 }
