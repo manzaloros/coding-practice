@@ -16,14 +16,14 @@ const findMinArrowShots = (points) => {
 
   points.sort((a, b) => a[1] - b[1]);
 
-  let end = points[0][1];
+  let currentEnd = points[0][1];
 
   let result = 1;
   for (let i = 0; i < points.length; i += 1) {
     const point = points[i];
-    if (point[0] <= end) continue;
+    if (point[0] <= currentEnd) continue;
     result += 1;
-    end = point[1];
+    currentEnd = point[1];
   }
   return result
 }
