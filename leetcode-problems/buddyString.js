@@ -40,12 +40,44 @@ A and B consist of lowercase letters.
 */
 
 const buddyStrings = (a, b) => {
+  // if (a.length !== b.length) return false;
+
+  // if (a !== b) {
+  //   let [count, first, second] = [0, 'a', 'a'];
+
+  //   for (let i = 0; i < a.length; i += 1) {
+  //     if (a[i] === b[i]) continue;
+  //     if (count >= 2) return false;
+  //     if (count === 0) {
+  //       first = a[i];
+  //       second = b[i];
+  //       count += 1;
+  //       continue;
+  //     }
+  //     if (a[i] !== second || b[i] !== first) return false;
+  //     count += 1;
+  //   }
+  //   return count === 2;
+  // }
+
+  // if (a.length > 26) return true;
+  // let freq = new Array(26).fill(0);
+  // const array1 = a.split("");
+  // for (let i = 0; i < array1.length; i += 1) {
+  //   const char = array1[i].charCodeAt();
+  //   const aCode = 'a'.charCodeAt();
+  //   // any character.charCodeAt() - 'a'.charCodeAt() gives you position of character in alphabet
+  //   // if a character is repeated, return true
+  //   if (freq[char - aCode] === 1) return true;
+  //   freq[char - aCode] = 1;
+  // }
+  // return false;
+
   if (a.length !== b.length) return false;
-
+  const array1 = a.split("");
+  let [count, first, second] = [0, 'a', 'a'];
   if (a !== b) {
-    let [count, first, second] = [0, 'a', 'a'];
-
-    for (let i = 0; i < a.length; i += 1) {
+    for (let i = 0; i < array1.length; i += 1) {
       if (a[i] === b[i]) continue;
       if (count >= 2) return false;
       if (count === 0) {
@@ -60,19 +92,20 @@ const buddyStrings = (a, b) => {
     return count === 2;
   }
 
-  if (a.length > 26) return true;
-  let freq = new Array(26).fill(0);
-  const array1 = a.split("");
-  for (let i = 0; i < array1.length; i += 1) {
-    const char = array1[i].charCodeAt();
+  const letterTracker = new Array(26).fill(0);
+  for (let i = 0; i < a.length; i += 1) {
     const aCode = 'a'.charCodeAt();
-    // any character.charCodeAt() - 'a'.charCodeAt() gives you position of character in alphabet
-    // if a character is repeated, return true
-    if (freq[char - aCode] === 1) return true;
-    freq[char - aCode] = 1;
+    const letterCode = a[i].charCodeAt();
+    // If you have a repeated letter, you automatically know that swapping it will fulfill condition
+    if (letterTracker[letterCode - aCode] === 1) return true;
+    letterTracker[letterCode - aCode] = 1;
   }
   return false;
+
 }
 
 // console.log(buddyStrings("aaaaaaabc", "aaaaaaacb")); // true
-console.log(buddyStrings("ab", "ab")); // false
+// console.log(buddyStrings("ba", "ab")); // true
+// console.log(buddyStrings("aabb", "aabb")); // true
+// console.log(buddyStrings("abcaa", "abcbb")); // false
+console.log(buddyStrings("aaab", "aaab")); // true
