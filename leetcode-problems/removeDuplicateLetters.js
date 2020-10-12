@@ -34,12 +34,15 @@ const removeDuplicateLetters = (s) => {
   // array.forEach(letter => count[letter] ? count[letter] += 1 : count[letter] = 1);
   /*
     Wrapping the reducer function in parentheses just return the contents as an object literal
-    if you don't wrap in parentheses, it will be treated as a code block
+    if you don't wrap in parentheses, it will be treated as a code block ({})
+
+    {...object1, object2 OR property: value} will create a new object from the merged objects
   */
   const count = array.reduce((map, letter) => ({
     ...map,
     [letter]: (map[letter] || 0) + 1,
   }), {})
+
   const stack = [];
   const added = new Set();
   for (i = 0; i < array.length; i += 1) {
