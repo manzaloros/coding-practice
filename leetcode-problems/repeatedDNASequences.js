@@ -20,11 +20,13 @@ Constraints:
 s[i] is 'A', 'C', 'G', or 'T'.
  */
 
+/* Time complexity: O(n^2) space complexity: not sure */
+
 const findRepeatedDnaSequences = (s) => {
-  // if (s.length <= 10) return s;
   const sequences = new Set();
   const result = [];
   const length = s.length;
+  // Length - 9 to include if i === 1 and match is found
   for (let i = 0; i < length - 9; i += 1) {
     const currentSequence = s.slice(i, i + 10);
     if (sequences.has(currentSequence)) {
