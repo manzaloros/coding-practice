@@ -34,12 +34,14 @@ const reverseWords = (m) => {
       j -= 1;
     }
     temp2 = m.slice(j + 1, previousWordEndIndex);
-    previousWordEndIndex = j;
-    if (i >= j) break;
+    if (i > j) break;
     const wordDifference = temp2.length - temp.length;
     m.splice(previousWordBeginningIndex, temp.length, ...temp2);
     m.splice(j + wordDifference + 1, temp2.length, ...temp);
     previousWordBeginningIndex = i + 1;
+    j += (wordDifference - 1)
+    previousWordEndIndex = j + 1;
+    i += (wordDifference + 1);
     temp = [];
     temp2 = [];
   }
