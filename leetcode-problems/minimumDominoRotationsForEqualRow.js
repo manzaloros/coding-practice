@@ -38,6 +38,9 @@ Explanation :
 2.make all values in B equal to A[0].
 3.make all values in A equal to B[0].
 4.make all values in B equal to B[0].
+
+If the first value of a or b does not match all subsequent values,
+then you know it isn't possible
  */
 const minDominoRotations = (a, b) => {
   let minSwaps = Infinity;

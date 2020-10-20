@@ -23,28 +23,28 @@ When writing your function, assume the message contains only letters and spaces,
 
 const reverseWords = (m) => {
   const length = m.length;
-  let [previousWordBeginningIndex, previousWordEndIndex, i, j] = [0, length, 0, length];
-  let temp = [];
-  let temp2 = [];
+  // reverse all characters in sentence
+  // i and j = 0
+  let [i, j] = [0, length - 1];
+  // while i < j
   while (i < j) {
-    while (m[i] !== ' ') {
-      temp.push(m[i++]);
-    }
-    while (m[j] !== ' ') {
-      j -= 1;
-    }
-    temp2 = m.slice(j + 1, previousWordEndIndex);
-    if (i > j) break;
-    const wordDifference = temp2.length - temp.length;
-    m.splice(previousWordBeginningIndex, temp.length, ...temp2);
-    m.splice(j + wordDifference + 1, temp2.length, ...temp);
-    previousWordBeginningIndex = i + 1;
-    j += (wordDifference - 1)
-    previousWordEndIndex = j + 1;
-    i += (wordDifference + 1);
-    temp = [];
-    temp2 = [];
+    // temp = array[i]
+    const temp = m[i];
+    // m[i] = m[j]
+    m[i] = m[j];
+    // m[j] = temp
+    m[j] = temp;
+    i += 1;
+    j -= 1;
+    // i ++, j--
   }
+  // i and j = 0,
+  // while i < length
+  // temp = ''
+  // while char is not a ' '
+  // temp unshift char
+  // temp
+
 }
 // const message = ['s', 't', 'e', 'a', 'l', ' ',
 //   'p', 'o', 'u', 'n', 'd', ' ',
