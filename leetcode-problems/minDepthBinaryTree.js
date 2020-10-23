@@ -22,28 +22,41 @@ The number of nodes in the tree is in the range [0, 105].
 -1000 <= Node.val <= 1000 */
 
 const minDepth = (root) => {
-  // store minimum = infinity
-  // recurse on node, depth = 1
-  // current depth += 1
-  // if the current node has no left or right
-  // update depth if smallest
-  // return
-  // return recurse on node's left and right
-  // invoke recurse on root
-  // return minimum
-
+  /* if (!root) return 0;
   min = Infinity;
   const recurse = (node, depth = 1) => {
-    if ((!node.left || !node.left.val) && (!node.right || !node.right.val)) {
+    if ((!node || !node.left) && (!node || !node.right)) {
       min = Math.min(min, depth);
       return;
     }
     depth += 1;
-    recurse(node.left, depth);
-    recurse(node.right, depth);
+    if (node.left) {
+      recurse(node.left, depth);
+    }
+    if (node.right) {
+      recurse(node.right, depth);
+    }
   }
   recurse(root);
-  return min;
+  return min; */
+
+  /* Faster solution: */
+  if (!root) return 0;
+
+  let depth = 1;
+  const queue = [root];
+  while (queue.length > 0) {
+    const length = queue.length;
+    for (let i = 0; i < length; i += 1) {
+      const node = queue.shift();
+      if (node === null) return 0;
+      if (node.left === null && node.right === null) return depth;
+      if (node.left !== null) queue.push(node.left);
+      if (node.right !== null) queue.push(node.right);
+    }
+    depth += 1;
+  }
+  return depth;
 }
 
 function TreeNode(val, left, right) {
