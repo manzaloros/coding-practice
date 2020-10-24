@@ -30,36 +30,26 @@ n == nums.length
 -109 <= nums[i] <= 109 */
 
 const find132pattern = (nums) => {
-  // const length = nums.length;
-  // let [patternFound, j, k] = [false, length - 1, length - 2];
-  // const checkPattern = (i, j, k) => {
-  //   if (nums[i] < nums[j] && nums[k] > nums[j]) {
-  //     console.log(`i: ${i}, j: ${j}, k: ${k}`)
-  //     return true;
-  //   }
-  // }
-  // for (let i = 0; i < length; i += 1) {
-  //   while (k > i) {
-  //     while (k > i) {
-  //       if (checkPattern(i, j, k)) {
-  //         return true;
-  //       }
-  //       k -= 1;
-  //     }
-  //     j -= 1;
-  //     k = j - 1;
-  //   }
-  //   k = (length - 2);
-  //   j = length - 1;
-  // }
-  // return patternFound;
-
   const [{ length }, minVals] = [nums, [nums[0]]];
   if (!length) return false;
+  /* *
+  Create min value array that as indexes increase,
+  The current minimum from nums is tracked
+  So if the first number of nums is the lowest number in nums,
+  min values will be just that number repeated length times.
+   */
   for (let i = 1; i < length; i += 1) {
     minVals[i] = Math.min(minVals[i - 1], nums[i]);
   }
 
+  /**
+   * Stack will hold previous minimum values. We will iterate backwards through nums
+   * We pop off the stack if the current value is less than or equal to the top
+   * But if we find that the top of the stack is less than the current nums value,
+   * We know that our current minimum is tracked in the minVals array and that
+   * if the current nums value is greater than the top of the stack, we found a 132 pattern.
+   * Why do we use a stack? We need the last in first out push and pop.
+   *  */
   const stack = [];
   for (let i = length - 1; i > 0; i -= 1) {
     const [minVal, current] = [
