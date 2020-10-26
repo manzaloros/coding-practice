@@ -55,9 +55,11 @@ const winnerSquareGame = (n) => {
   //       subtraction += 1;
   //     }
   //   }
-  // }
+
 
   // return i % 2 !== 0;
+
+  // Bottom up dp:
 
   const dp = new Array(n + 1).fill(false);
 
