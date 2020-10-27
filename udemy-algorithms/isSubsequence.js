@@ -1,0 +1,3 @@
+const isSubsequence = (possibleSubstring, string) => {
+
+}
