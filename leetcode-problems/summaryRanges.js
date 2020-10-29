@@ -45,7 +45,7 @@ Constraints:
 -231 <= nums[i] <= 231 - 1
 All the values of nums are unique. */
 
-const summaryRanges = (nums, [beginning, end] = [nums[0], nums[0]]) => {
+const summaryRanges = (nums, [beginning, end] = [nums[0]]) => {
   // const result = [];
   // let [beginning, end] = [nums[0], nums[0]];
   // for (let i = 0; i < nums.length; i += 1) {
