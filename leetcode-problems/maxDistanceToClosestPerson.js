@@ -45,17 +45,20 @@ const maxDistToClosest = (seats,
   const isEndOfRow = () => (j + 1) === length;
   const distanceToEndOfRow = () => j - i;
   const distanceBetweenSeats = () => Math.ceil(((j - 1) - i) / 2);
+  const seatsLeftInRow = () => j < length;
+  const checkNextRightSeat = () => j += 1;
+  const checkNextGap = () => i = j++;
+  const areBetweenOccupiedSeats = () => rightSeatOccupied() && leftSeatOccupied();
+  const updateMaxDistance = () => maxDist = areBetweenOccupiedSeats() ? Math.max(maxDist, distanceBetweenSeats()) : Math.max(maxDist, distanceToEndOfRow());
 
-  while (j < length) {
+  while (seatsLeftInRow()) {
     while (!rightSeatOccupied() && !isEndOfRow()) {
-      j += 1;
+      checkNextRightSeat();
     }
 
-    maxDist = rightSeatOccupied() && leftSeatOccupied()
-      ? Math.max(maxDist, distanceBetweenSeats())
-      : Math.max(maxDist, distanceToEndOfRow())
+    updateMaxDistance();
 
-    i = j++;
+    checkNextGap();
   }
 
   return maxDist;
