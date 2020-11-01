@@ -24,17 +24,16 @@ The number of nodes in the tree is in the range [2, 1000].
 -231 <= Node.val <= 231 - 1 */
 
 const recoverTree = (root) => {
-  const big = 2333444555;
-  let prev = -big;
+  let prev = -Infinity;
   const flips = [];
   let stack = [[root, 0]];
   while (stack.length > 0) {
     let node = stack[stack.length - 1][0];
     let j = stack[stack.length - 1][1];
-    if (j === 2) {
+    if (j === 2) { // remove node from stack if already checked
       stack.pop();
-    } else if (j === 1) {
-      if (node.val < prev) {
+    } else if (j === 1) { // check node if out of order
+      if (node.val < prev) { // node is out of order
         flips.push(prev);
         flips.push(node.val);
       }
@@ -43,7 +42,7 @@ const recoverTree = (root) => {
       if (node.right) {
         stack.push([node.right, 0]);
       }
-    } else {
+    } else { // node hasn't been checked
       stack[stack.length - 1][1] = 1;
       if (node.left) {
         stack.push([node.left, 0]);
@@ -65,6 +64,39 @@ const recoverTree = (root) => {
     }
   }
 }
+
+/* A Tiller solution: */
+/*
+var recoverTree = function(root) {
+
+  function makeInorder(node, arr) {
+    if (node.left) makeInorder(node.left, arr);
+    arr.push(node);
+    if (node.right) makeInorder(node.right, arr);
+  }
+
+  const inOrder = [];
+  makeInorder(root, inOrder);
+
+  let first = null;
+  let second = null;
+  for (let i = 0; i < inOrder.length - 1; i++) {
+    if (inOrder[i].val > inOrder[i + 1].val) {
+      second = inOrder[i + 1];
+      if (!first) {
+        first = inOrder[i];
+      } else {
+        break
+      }
+    }
+  }
+
+  // I maintain that it's cheating to just swap the values instead of rewiring the nodes,
+  // but LeetCode disagrees and the code I wrote to switch the nodes was both super messy
+  // and didn't work. So here I am.
+  [first.val, second.val] = [second.val, first.val];
+};
+*/
 
 const tree = { val: 3, left: { val: 1, left: null, right: null }, right: { val: 4, left: { val: 2 } } };
 console.log(recoverTree(tree));
