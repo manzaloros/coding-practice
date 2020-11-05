@@ -44,7 +44,6 @@ const maxPower = (s, [count, max] = [1, 1], { length } = s) => {
   //   i = j - 1;
   // }
   // return maxLength;
-
   for (let i = 0; i < length - 1; i += 1) {
     if (s[i] === s[i + 1]) {
       count += 1;
