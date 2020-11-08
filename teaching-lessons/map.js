@@ -23,6 +23,13 @@ mapped = numbers.map(function (num) {
   return num * 2;
 });
 
+/* Must have a return value! */
+mapped = numbers.map(function (num) {
+  num * 2;
+  // Returns undefined implicitly
+});
+// console.log('Mapped without return in function: ', mapped);
+
 mapped = numbers.map((num) => {
   return num * 2;
 });
@@ -36,4 +43,15 @@ mapped = numbers.map(num => num * 2);
 
 /* Does not alter the original array! Bind a variable to the return value. */
 numbers.map(num => num * 2);
-console.log('Mapped:  ', mapped);
+// console.log('Mapped:  ', mapped);
+
+/* Using index argument, doubles only even numbers */
+mapped = numbers.map((num, index) => {
+  if (index % 2 === 0) {
+    return num * 2
+  } else {
+    return num;
+  }
+});
+// console.log('Mapping every even index: ', mapped);
+
