@@ -28,5 +28,15 @@ The number of nodes in the tree is in the range [2, 5000].
 0 <= Node.val <= 105 */
 
 const maxAncestorDiff = (root) => {
+  let maxDiff = 0;
+  const recurse = (node, minSeen = root.val, maxSeen = root.val) => {
+    maxDiff = Math.max(Math.abs(node.val - minSeen), Math.abs(node.val - maxSeen), maxDiff);
 
+    if (node.left) recurse(node.left, Math.min(node.val, minSeen), Math.max(node.val, maxSeen));
+    if (node.right) recurse(node.right, Math.min(node.val, minSeen), Math.max(node.val, maxSeen));
+  }
+
+  recurse(root);
+
+  return maxDiff;
 }
