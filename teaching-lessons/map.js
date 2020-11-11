@@ -3,7 +3,7 @@
 const doubleAndPrintMe = function (nums) {
   const doubled = [];
   for (let i = 0; i < numbers.length; i += 1) {
-    doubled.push(numbers[i] * 2);
+    doubled[i] = numbers[i] * 2;
   }
   // console.log('Doubled in for-loop! ', doubled)
   return doubled;
@@ -54,4 +54,10 @@ mapped = numbers.map((num, index) => {
   }
 });
 // console.log('Mapping every even index: ', mapped);
+
+/* When to not use .map()
+  When you are not using the return array
+  When your callback does not return a value
+*/
+
 

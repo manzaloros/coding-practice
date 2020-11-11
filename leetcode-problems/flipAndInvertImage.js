@@ -21,6 +21,10 @@ Notes:
 1 <= A.length = A[0].length <= 20
 0 <= A[i][j] <= 1 */
 
-const flipAndInvertImage = a => a.map(r => r.map(n => n === 1 ? 0 : 1).reverse());
+/*
+O(n^2)
+*/
+const flipAndInvertImage = a => a.map(r => r.map(n => ~n).reverse());
+
 
 console.log(flipAndInvertImage([[1, 1, 0, 0], [1, 0, 0, 1], [0, 1, 1, 1], [1, 0, 1, 0]]))
