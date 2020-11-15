@@ -1,4 +1,4 @@
-/* Using multiple pointers
+/* Using multiple pointers!
 I: sorted array of numbers
 O:  number of unique values in the array
 C: TC / SC: O(n), bonus SC: O(n)
@@ -8,8 +8,7 @@ Returns 0 if empty array
 
 */
 
-const countUniqueValues = (sortedArray, { length } = sortedArray, let [i, j] = [0, 1]) => {
-  if (length === 0) return 0;
+const countUniqueValues = (sortedArray, [i, j, { length }] = [0, 1, sortedArray]) => {
   while (j < length) {
     if (sortedArray[i] !== sortedArray[j]) {
       i += 1;
@@ -17,8 +16,8 @@ const countUniqueValues = (sortedArray, { length } = sortedArray, let [i, j] = [
     }
     j += 1;
   }
-  return i + 1;
-}
+  return i === 0 ? 0 : i + 1;
+};
 
 // countUniqueValues([1, 1, 1, 1, 1, 2]);
 // countUniqueValues([1, 2, 3, 4, 4, 4, 7, 7, 12, 12, 13]);
