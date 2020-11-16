@@ -7,9 +7,7 @@ const findLongestSubstring = (str,
     }
     maxWindowLengthSoFar = Math.max(maxWindowLengthSoFar, (i - windowStart) + 1);
     currentWindowSeenLetters[currentLetter] = i + 1;
-
   }
-
   return maxWindowLengthSoFar;
 }
 
