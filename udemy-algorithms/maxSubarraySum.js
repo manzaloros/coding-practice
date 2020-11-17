@@ -13,18 +13,31 @@ const maxSubarraySum = (nums, l, [max, currMax, { length }, j] = [0, 0, nums, l]
   return max;
 } */
 
-const maxSubarraySum = function (arr, l) {
+const maxSubarraySum = function (arr, l, [maxSum, currentSum] = [-Infinity, 0]) {
   if (arr.length < l) return null
-  let maxSum = -Infinity;
-  let currentSum = 0;
 
   for (let i = 0; i < l; i += 1) {
     currentSum += arr[i];
   }
 
+  // return arr.reduce((max, curr, i) => {
+  //   // if (i >= l) {
+  //   //   currentSum = (currentSum - arr[i - l]) + curr;
+  //   //   return Math.max(max, currentSum);
+  //   // } else {
+  //   //   currentSum += curr;
+  //   // }
+  //   // return -Infinity;
+  //   currentSum = (i >= l) ? (currentSum - arr[i - l]) + curr : currentSum += curr;
+  //   return (i >= l) ? Math.max(max, currentSum) : -Infinity;
+  // }, 0);
+
+  /* For loop, easier to understand: */
   for (let i = l; i < arr.length; i += 1) {
     maxSum = Math.max(maxSum, currentSum);
-    currentSum = currentSum - arr[i - l] + arr[i];
+    // Current sum - old previous first element + new last element
+    // Shifting window right
+    currentSum = (currentSum - arr[i - l]) + arr[i];
   }
 
   return Math.max(maxSum, currentSum);
