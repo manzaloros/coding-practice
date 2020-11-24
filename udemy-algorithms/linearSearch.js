@@ -1,3 +1,5 @@
+/* O(n) time complexity */
+
 const linearSearch = (arr, val) => {
   for (let i = 0; i < arr.length; i += 1) {
     if (arr[i] === val) return i;
