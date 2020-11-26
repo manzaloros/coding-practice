@@ -6,7 +6,7 @@
 // No additional characters are allowed except for those mentioned.
 
  function countSmilies(array) {
-  //create numberOfSmilie 
+  //create numberOfSmilie var 
   let numberOfSmilies = 0;
   //iterate over array
   for (let i = 0; i < array.length; i++) {  	
