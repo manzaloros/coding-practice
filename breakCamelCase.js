@@ -1,5 +1,5 @@
 // Complete the solution so that the function will break up camel casing, using a space between words.
-// Example
+// Example 
 // solution("camelCasing")  ==  "camel Casing"
 
 function solution(str) {
