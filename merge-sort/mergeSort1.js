@@ -1,3 +1,4 @@
+const assert = require('assert');
 const mergeSort = (nums) => {
   if (nums.length === 1) return nums;
 
@@ -9,10 +10,7 @@ const mergeSort = (nums) => {
 }
 
 
-const merge = (left, right) => {
-  let [i, j] = [0, 0];
-
-  const sorted = [];
+const merge = (left, right, [i, j, sorted] = [0, 0, []]) => {
 
   while (i < left.length && j < right.length) {
     if (left[i] <= right[j]) {
@@ -26,8 +24,6 @@ const merge = (left, right) => {
   return sorted.concat(remaining);
 }
 
-
-// Maybe use Node.js built in assertion functions here:
 const assertArraysEqual = (actual, expected) => {
   if (!Array.isArray(actual) || !Array.isArray(expected)) return console.log(`invalid input`);
   if (actual.length !== expected.length) return console.log(`Non-matching lengths`);
@@ -44,4 +40,6 @@ const assertArraysEqual = (actual, expected) => {
 
 
 const array = [5, 4, 3, 2, 1];
-assertArraysEqual(mergeSort(array), array.sort((a, b) => a - b));
+// assertArraysEqual(mergeSort(array), array.sort((a, b) => a - b));
+/* Throws an error if not deep equal */
+assert.deepEqual(mergeSort(array), array.sort((a, b) => a - b), 'Arrays aren\'t equal');
