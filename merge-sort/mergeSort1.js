@@ -26,6 +26,8 @@ const merge = (left, right) => {
   return sorted.concat(remaining);
 }
 
+
+// Maybe use Node.js built in assertion functions here:
 const assertArraysEqual = (actual, expected) => {
   if (!Array.isArray(actual) || !Array.isArray(expected)) return console.log(`invalid input`);
   if (actual.length !== expected.length) return console.log(`Non-matching lengths`);
