@@ -1,0 +1,24 @@
+.container {
+  grid-template-columns: 90px auto 90px;
+  grid-template-rows: 25% auto;
+}
+
+.top-left-nav {
+  grid-column-start:1;
+  grid-column-end: 2;
+  grid-row-start:1;
+  grid-row-end: 2;
+}
+
+.top-right-nav {
+  grid-column-start:3;
+  grid-column-end: 3;
+  grid-row-start:1;
+  grid-row-end: 2;
+}
+
+.login-container {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 2;
+}
