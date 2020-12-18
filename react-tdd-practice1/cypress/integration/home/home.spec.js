@@ -24,9 +24,12 @@ describe("Home page", () => {
     expect(cy.get('#recipe-form')).toExist();
   });
 
-  it("contains a form with fields 'Recipe name' and 'Recipe Instructions' after after clicking the addRecipe button", () => {
-    expect(cy.get('input[name="newRecipeName"]')).toExist();
-    expect(cy.get('textarea[name="newRecipeInstructions]')).toExist();
+  it("contains a form with fields 'Recipe Name' and 'Recipe Instructions' after clicking the 'Add Recipe' button", () => {
+    const addRecipeButton = cy.get('#add-recipe')
+    addRecipeButton.click()
+
+    expect(cy.get('input[name="newRecipeName"]')).toExist()
+    expect(cy.get('textarea[name="newRecipeInstructions"]')).toExist()
   });
 
   it("displays a recipe name under the 'My Recipes' heading after it has been added through the 'Add Recipe' form", () => {
@@ -37,7 +40,7 @@ describe("Home page", () => {
       cy.get('textarea[name="newRecipeInstructions"]').type("1. heat a skillet on medium with a dollop of coconut oil {enter} 2. warm flour tortillas");
       cy.get('input[type="submit"]').click();
       cy.get('ul').then(() => {
-        cy.get('ul').contains("Tofy Scramble Tacos");
+        cy.get('ul').contains("Tofu Scramble Tacos");
       });
     });
   });

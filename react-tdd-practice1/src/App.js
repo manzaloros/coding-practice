@@ -6,6 +6,9 @@ class App extends Component {
     super();
     this.state = {
       isAddRecipeFormDisplayed: false,
+      recipes: [],
+      newRecipeName: '',
+      newRecipeInstructions: '',
     }
   }
 
@@ -51,7 +54,12 @@ class App extends Component {
       <div className="App" >
         <h1 className="App-header">My Recipes</h1>
         {this.state.isAddRecipeFormDisplayed ? addNewRecipeForm : addNewRecipeButton}
-        <p>There are no recipes to list.</p>
+        {this.state.recipes.length > 0 ?
+          <ul>
+            <li>{this.state.recipes[0].name}</li>
+          </ul> :
+          <p>There are no recipes to list.</p>}
+
       </div>
     );
   }

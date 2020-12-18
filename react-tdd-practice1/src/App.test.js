@@ -113,4 +113,17 @@ test('typing into the recipe instructions input updates state', () => {
   expect(wrapper.state().newRecipeInstructions).toEqual(recipeInstructions);
 });
 
-test('')
+test('recipe name from recipe in state appears in unordered list', () => {
+  const [wrapper,
+    recipeName,
+    recipeInstructions] =
+    [shallow(<App />),
+      "Learn Pockets",
+      "place in toaster oven on 350 for 45 minutes"];
+  const submittedRecipe = { name: recipeName, instructions: recipeInstructions };
+
+  wrapper.setState({ recipes: [submittedRecipe] });
+
+  expect(wrapper.find('li')).toHaveLength(1);
+  expect(wrapper.find('li').text()).toEqual(recipeName);
+});
