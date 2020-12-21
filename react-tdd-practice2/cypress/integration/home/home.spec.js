@@ -52,6 +52,7 @@ describe('Home page', () => {
     cy.get('textarea[name="newRecipeInstructions"]').type("1. heat a skillet on medium with a dollop of coconut oil {enter} 2. warm flour tortillas")
     cy.get('input[type="submit"]').click()
 
-    // expect(cy.get('ul>li')).eq(1).contains('Egg Benedict');
+    const secondListElement = cy.get('li').eq(1);
+    (secondListElement).should('contain', 'Egg Benedict');
   })
 })
