@@ -35,7 +35,7 @@ describe('Home page', () => {
   it("displays a recipe name under the 'My Recipes' heading after it has been added through the 'Add Recipe' form", () => {
     const addRecipeButton = cy.get('#add-recipe');
     addRecipeButton.click();
-    cy.get('input[name="newRecipeName"]').type("Tofu Scramble Tacos")
+    cy.get('input[name="newRecipeName"]').type("Tofu Scramble Tacos", { delay: 200 })
     cy.get('textarea[name="newRecipeInstructions"]').type("1. heat a skillet on medium with a dollop of coconut oil {enter} 2. warm flour tortillas")
     cy.get('input[type="submit"]').click();
     cy.get('ul').contains("Tofu Scramble Tacos")
