@@ -45,6 +45,7 @@ The number of nodes in the tree is in the range [1, 10^4].
 The values of the nodes of the tree are unique.
 target node is a node from the original tree and is not null
 */
+const { constructTreeFromArray } = require('./binaryTreeClass.js')
 const getTargetCopy = function (original, cloned, target) {
   const result = [];
   const recurse = (o, c, t) => {
