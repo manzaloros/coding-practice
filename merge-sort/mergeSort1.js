@@ -1,4 +1,6 @@
 const assert = require('assert');
+// Time complexity O(n * log n)
+
 const mergeSort = (nums) => {
   if (nums.length === 1) return nums;
 
