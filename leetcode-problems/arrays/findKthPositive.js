@@ -37,11 +37,7 @@ const findKthPositive = (arr, k) => {
     }
     tracker += 1;
   }
-  while (k > 0) {
-    tracker += 1;
-    k -= 1;
-  }
-  return tracker;
+  return tracker + k;
 }
 
 const arr1 = [2, 3, 4, 7, 11];
