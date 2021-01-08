@@ -9,7 +9,7 @@ const pivotHelper = function (arr, start = 0, end = arr.length + 1) {
     if (pivot > arr[i]) {
       // swap
       swap(arr, i, ++pivotIndex);
-      console.log(JSON.stringify(arr));
+      //console.log(JSON.stringify(arr));
     }
   }
   // swap starting element (the pivot) with the pivot index
