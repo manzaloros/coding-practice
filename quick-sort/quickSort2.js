@@ -1,3 +1,5 @@
+// Average Time complexity: O(n log n) best case. O(n^2) worst case if you are always
+// picking the minimum or maximum element. No way to avoid the worst case
 const sortPivotAndReturnPivot = (arr, start = 0, end = arr.length) => {
   const pivot = arr[start];
   let swapIndex = start;
