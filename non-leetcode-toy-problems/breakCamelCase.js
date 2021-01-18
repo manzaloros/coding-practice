@@ -1,8 +1,8 @@
 // Complete the solution so that the function will break up camel casing, using a space between words.
-// Example 
+// Example
 // solution("camelCasing")  ==  "camel Casing"
 
-function solution(str) {
+const solution = function (str) {
   return str.split(/(?=[A-Z])/).join(" ");
 }
 // /  / signifies the start of the regular expression
@@ -13,8 +13,8 @@ function solution(str) {
 // A-Z matches characters in the range from A to Z, case sensitive
 
 
-function assertEquals(actual, expected){
-  if (actual === expected){
+const assertEquals = function (actual, expected) {
+  if (actual === expected) {
     console.log(`passed`);
   } else {
     console.log(`failed Expected "${expected}" but got "${actual}"`);
@@ -23,5 +23,7 @@ function assertEquals(actual, expected){
 let string = "camelCasing";
 let inputActual = solution(string);
 let inputExpected = "camel Casing";
-assertEquals(inputActual, inputExpected);
-console.log(string.split(/(?=[A-Z])/));
+//assertEquals(inputActual, inputExpected);
+//console.log(string.split(/(?=[A-Z])/));
+
+module.exports = solution;

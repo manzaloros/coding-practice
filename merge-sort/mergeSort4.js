@@ -1,14 +1,4 @@
-.
-const mergeSort = (arr) => {
-  if (arr.length === 1) return arr;
-
-  const halfway = Math.floor(arr.length / 2);
-  const leftHalf = arr.slice(0, halfway);
-  const rightHalf = arr.slice(halfway);
-
-  return merge(mergeSort(leftHalf), mergeSort(rightHalf));
-}
-
+/* eslint-disable no-param-reassign */
 const merge = (arr1, arr2, [i, j] = [0, 0]) => {
   const merged = [];
 
@@ -25,6 +15,17 @@ const merge = (arr1, arr2, [i, j] = [0, 0]) => {
   const remaining = i < arr1.length ? arr1.slice(i) : arr2.slice(j);
 
   return merged.concat(remaining);
-}
+};
+
+const mergeSort = (arr) => {
+  if (arr.length === 1) return arr;
+
+  const halfway = Math.floor(arr.length / 2);
+  const leftHalf = arr.slice(0, halfway);
+  const rightHalf = arr.slice(halfway);
+
+  return merge(mergeSort(leftHalf), mergeSort(rightHalf));
+};
+
 const arr = Array.from(Array(100), () => Math.floor(10 * Math.random()));
 console.log(JSON.stringify(mergeSort(arr)) === JSON.stringify(arr.sort((a, b) => a - b)));
