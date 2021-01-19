@@ -1,12 +1,48 @@
+/* eslint-disable import/prefer-default-export */
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/react-in-jsx-scope */
 /* eslin-disable react/jsx-ilename-extension */
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 
-function getUser() {
-  return Promise.resolve({ id: '1', name: 'Zach' });
+const URL = 'http://hn.algolia.com/api/v1/search';
+
+function App() {
+  const [stories, setStories] = useState([]);
+  const [error, setError] = useState(null);
+
+  async function handleFetch() {
+    let result;
+
+    try {
+      result = await axios.get(`${URL}?query=React`);
+
+      setStories(result.data.hits);
+    } catch (e) {
+      setError(e);
+    }
+  }
+
+  return (
+    <div>
+      <button type="button" onClick={handleFetch}>
+        Fetch Stories
+      </button>
+
+      {error && <span>Something went wrong ...</span>}
+
+      <ul>
+        {stories.map((story) => (
+          <li key={story.objectID}>
+            <a href={story.url}>{story.title}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
-
+/*
 function App() {
   const [search, setSearch] = useState('');
   const [user, setUser] = useState(null);
@@ -59,5 +95,5 @@ function Search({ value, onChange, children }) {
     </div>
   );
 }
-
-export { App, Search };
+*/
+export { App };
