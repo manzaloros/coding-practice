@@ -37,5 +37,38 @@ slash '/' or '_'. path is a valid absolute Unix path.
 */
 
 const simplifyPath = (path) => {
+  const stack = [];
 
+  path = path.split('/');
+
+  for (let i = 0; i < path.length; i += 1) {
+    const dir = path[i];
+    if (!dir || dir === '.') {
+      continue;
+    } else if (dir === '..') {
+      if (stack.length > 0) {
+        stack.pop();
+      }
+    } else {
+      stack.push(dir);
+    }
+  }
+
+  const root = '/';
+  return root + stack.join('/');
 };
+
+console.log(simplifyPath('/..'));
+// console.log(simplifyPath('/home/'));
+console.log(simplifyPath('/.'));
+console.log(simplifyPath('/../'));
+// console.log(simplifyPath('/home//foo/'));
+console.log(simplifyPath('/a/./b/../../c/'));
+console.log(simplifyPath(
+  '/a/../../b/../c//.//',
+));
+console.log(simplifyPath(
+
+  '/a//b////c/d//././/..',
+));
+console.log(simplifyPath('/...'));
