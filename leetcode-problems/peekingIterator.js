@@ -1,4 +1,5 @@
 /*  Peeking Iterator
+https://leetcode.com/submissions/detail/453787284/?from=explore&item_id=3633
 Given an Iterator class interface with methods: next() and
 hasNext(), design and implement a PeekingIterator that support the peek()
 operation -- it essentially peek() at the element that will be returned by the
@@ -68,6 +69,7 @@ PeekingIterator.prototype.hasNext = function () {
   if (this.currentIndex >= this.storage.length) return false;
   return true;
 };
+/*
 
 /**
  * Your PeekingIterator object will be instantiated and called as such:
