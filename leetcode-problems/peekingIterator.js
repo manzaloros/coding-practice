@@ -69,6 +69,13 @@ PeekingIterator.prototype.hasNext = function () {
   if (this.currentIndex >= this.storage.length) return false;
   return true;
 };
+
+/* Better solution, wrapping the class: */
+class PeekingIterator {
+  constructor(iterator) {
+    iter
+  }
+}
 /*
 
 /**
