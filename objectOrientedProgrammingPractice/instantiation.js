@@ -19,6 +19,7 @@ console.log(lassy.wag());
 
   The problem with functional shared pattern is that the methods are created at the time of
   instantiation. If you want to create a new object with updated methods, the
+  older objects will not be updated.
 */
 
 const Cat = function (color) {
