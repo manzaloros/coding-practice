@@ -1,4 +1,6 @@
 /* eslint-disable no-param-reassign */
+// Time Complexity: O(n * k) where k is the max number of digits of the numbers
+// Space Complexity: O(n + k)
 const placeHelper = (num, place) => Math.floor((num / 10 ** place) % 10);
 
 const digitHelper = (num) => Math.floor(Math.log10(num)) + 1;
