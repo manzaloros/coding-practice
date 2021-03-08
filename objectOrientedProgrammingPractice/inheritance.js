@@ -31,7 +31,7 @@ class Person {
   }
 
   sayHello() {
-    return console.log(`Hello from ${this.name}`); // must do `this.prop`
+    return "Hello from"  + this.name; // must do `this.prop`
   }
 }
 
@@ -40,9 +40,9 @@ class Child extends Person {
     super(name, age); // calls parent class constructor with specified args
   }
 
-  // sayHello() {
-  //   return console.log(`Hello from a tiny child ${this.name}, aged ${this.age}`);
-  // }
+   sayHello() {
+     return super.sayHello() + ", a tiny child, aged " + this.age;
+ / }
 }
 
 const timmy = new Child('timmy', 4);
