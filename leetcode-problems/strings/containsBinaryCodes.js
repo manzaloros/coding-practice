@@ -37,28 +37,15 @@ s consists of 0's and 1's only.
 const hasAllCodes = (s, k) => {
   const combinations = new Set();
 
-  const recurse = (str) => {
-    if (str.length === k) {
-      return combinations.add(str);
-    }
-
-    ['1', '0'].forEach((n) => recurse(n + str));
-  };
-
-  recurse('');
-
-  let numLeft = combinations.size;
   for (let i = 0; i <= s.length - k; i += 1) {
     const substring = s.substring(i, i + k);
-    if (combinations.has(substring)) {
-      numLeft -= 1;
-      combinations.delete(substring);
+    if (!combinations.has(substring)) {
+      combinations.add(substring);
     }
-    if (numLeft <= 0) return true;
   }
-  return false;
+  return combinations.size === (2 ** k);
 };
 
 hasAllCodes('01', 1);
-hasAllCodes('0000000001011100', 4);
-// hasAllCodes('000011010111011001001111111001000100100100010100101100001101101101110001100100101111100111001001111001001010111010010101101001001110011100110101001001001000000110101001010011101100110110100010000', 7);
+// hasAllCodes('0000000001011100', 4);
+hasAllCodes('000011010111011001001111111001000100100100010100101100001101101101110001100100101111100111001001111001001010111010010101101001001110011100110101001001001000000110101001010011101100110110100010000', 7);
