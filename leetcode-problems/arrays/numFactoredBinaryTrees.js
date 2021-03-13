@@ -7,14 +7,13 @@ const numFactoredBinaryTrees = (arr) => {
     const limit = Math.sqrt(num);
     let currentNumberOfCombinations = 1;
 
-    for (let i = 0, factor1 = arr[i]; factor1 <= limit; factor1[i += 1]) {
+    for (let i = 0, factor1 = arr[i]; factor1 <= limit; factor1 = arr[i += 1]) {
       const factor2 = num / factor1;
 
       if (memo.has(factor2)) {
         currentNumberOfCombinations
         += (memo.get(factor1) * memo.get(factor2) * (factor1 === factor2 ? 1 : 2));
       }
-      factor1 = arr[i + 1];
     }
 
     result += currentNumberOfCombinations;
