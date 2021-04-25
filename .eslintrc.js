@@ -13,5 +13,7 @@ module.exports = {
   rules: {
     'no-console': 'off',
     'no-unused-vars': 'off',
+    'max-classes-per-file': 'off',
+    'no-param-reassign': 'off',
   },
 };
