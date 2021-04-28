@@ -5,6 +5,24 @@
   log n is base 2
   .insert() O(log n)
   .find() O(log n)
+
+  Breadth-first search potentially has a high space complexity for wide trees,
+  compared to depth-first search. The actual space complexity depends on the
+  tree. A very deep tree could take a lot of space for a depth first search.
+
+  Breadth-first search space complexity comes from the queue it uses to store
+  every node of each layer of the tree.
+
+  Depth-first search space complexity comes from the stack frames it takes up
+  from recursion. You keep track of all the nodes in one BRANCH of a tree rather
+  than the whole layer.
+
+  DFS in order gives you all the nodes from lowest to highest number.
+
+  DFS pre order gives you an order that you could easily export and recreate the
+  tree somewhere else if needed.
+
+  Trees are non-linear
 */
 
 class Node {
@@ -135,6 +153,18 @@ class BinarySearchTree {
 
     return visited;
   }
+
+  dfsInOrder() {
+    const visited = [];
+    const traverse = (node) => {
+      if (node.left) traverse(node.left);
+      visited.push(node.val);
+      if (node.right) traverse(node.right);
+    };
+
+    traverse(this.root);
+    return visited;
+  }
 }
 
 const bst = new BinarySearchTree();
@@ -148,3 +178,4 @@ console.log(bst.find(5));
 console.log(bst.bfs());
 console.log(bst.dfsPreOrder()); // [10,4,2, 1,11]
 console.log(bst.dfsPostOrder()); // [1, 2, 4, 11, 10]
+console.log(bst.dfsInOrder()); // [1,2,4,10,11]
