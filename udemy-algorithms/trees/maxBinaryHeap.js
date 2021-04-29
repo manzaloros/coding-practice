@@ -40,12 +40,15 @@ class MaxBinaryHeap {
     let rightChildIndex = (parentIndex * 2) + 2;
 
     // while the indices are in bounds
-    while (leftChildIndex < length && rightChildIndex < length) {
-      const [left, right, parent] = [
+    while (leftChildIndex < length || rightChildIndex < length) {
+      let [left, right, parent] = [
         values[leftChildIndex], values[rightChildIndex], values[parentIndex]];
 
       // if a swap needs to happen
       if (left > parent || right > parent) {
+        // check if either is undefined
+        left = left || -1;
+        right = right || -1;
         // Check which child is greater
         if (left > right) {
           swap(parentIndex, leftChildIndex);
@@ -57,6 +60,9 @@ class MaxBinaryHeap {
 
         leftChildIndex = (parentIndex * 2) + 1;
         rightChildIndex = (parentIndex * 2) + 2;
+      } else {
+        // break if you don't need to swap
+        break;
       }
     }
 
