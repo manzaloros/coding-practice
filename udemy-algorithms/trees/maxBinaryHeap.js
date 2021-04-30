@@ -35,39 +35,66 @@ class MaxBinaryHeap {
     // move last item (most recently added) to the root
     values.unshift(values.pop());
 
-    let parentIndex = 0;
-    let leftChildIndex = (parentIndex * 2) + 1;
-    let rightChildIndex = (parentIndex * 2) + 2;
+    const parentIndex = 0;
+    const leftChildIndex = (parentIndex * 2) + 1;
+    const rightChildIndex = (parentIndex * 2) + 2;
 
+    this.maxHeapify(values, parentIndex);
+
+    // iterative version:
     // while the indices are in bounds
-    while (leftChildIndex < length || rightChildIndex < length) {
-      let [left, right, parent] = [
-        values[leftChildIndex], values[rightChildIndex], values[parentIndex]];
+    // while (leftChildIndex < length || rightChildIndex < length) {
+    //   let [left, right, parent] = [
+    //     values[leftChildIndex], values[rightChildIndex], values[parentIndex]];
 
-      // if a swap needs to happen
-      if (left > parent || right > parent) {
-        // check if either is undefined
-        left = left || -1;
-        right = right || -1;
-        // Check which child is greater
-        if (left > right) {
-          swap(parentIndex, leftChildIndex);
-          parentIndex = leftChildIndex;
-        } else {
-          swap(parentIndex, rightChildIndex);
-          parentIndex = rightChildIndex;
-        }
+    //   // if a swap needs to happen
+    //   if (left > parent || right > parent) {
+    //     // check if either is undefined
+    //     left = left || -1;
+    //     right = right || -1;
+    //     // Check which child is greater
+    //     if (left > right) {
+    //       swap(parentIndex, leftChildIndex);
+    //       parentIndex = leftChildIndex;
+    //     } else {
+    //       swap(parentIndex, rightChildIndex);
+    //       parentIndex = rightChildIndex;
+    //     }
 
-        leftChildIndex = (parentIndex * 2) + 1;
-        rightChildIndex = (parentIndex * 2) + 2;
-      } else {
-        // break if you don't need to swap
-        break;
-      }
-    }
+    //     leftChildIndex = (parentIndex * 2) + 1;
+    //     rightChildIndex = (parentIndex * 2) + 2;
+    //   } else {
+    //     // break if you don't need to swap
+    //     break;
+    //   }
+    // }
 
     // Return the old root and the newly sifted heap
     return [oldRoot, this];
+  }
+
+  maxHeapify(array, index) {
+    let [left, right, parent] = [(2 * index) + 1, (2 * index) + 2, index];
+
+    if (left <= array.length && array[left] > array[parent]) parent = left;
+    if (right <= array.length && array[right] > array[parent]) parent = right;
+
+    if (parent !== index) {
+      [array[index], array[parent]] = [array[parent], array[index]];
+      this.maxHeapify(array, parent);
+    }
+  }
+
+  bubbleUp(array, index) {
+    let child = index;
+    const parent = Math.floor((index - 1) / 2);
+
+    if (array[child] > array[parent]) child = parent;
+
+    if (child !== index) {
+      [array[child], array[parent]] = [array[parent], array[child]];
+      this.bubbleUp(array, child);
+    }
   }
 }
 
