@@ -85,7 +85,7 @@ class MaxBinaryHeap {
     }
   }
 
-  bubbleUp(array, index) {
+  bubbleUpp(array, index) {
     let child = index;
     const parent = Math.floor((index - 1) / 2);
 
