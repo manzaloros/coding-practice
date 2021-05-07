@@ -22,7 +22,8 @@ const checkPossibility = (nums, { length } = nums, modified = false, prev = -Inf
   for (let i = 0; i < length - 1; i += 1) {
     const [current, next] = [nums[i], nums[i + 1]];
 
-    if (current > next && !modified) {
+    if (current > next) {
+      if (modified) return false;
       if (prev <= next) {
         nums[i] = next;
       } else {
@@ -30,7 +31,8 @@ const checkPossibility = (nums, { length } = nums, modified = false, prev = -Inf
       }
 
       modified = true;
-    } else if (current > next && modified) return false;
+    }
+
     prev = nums[i];
   }
 
