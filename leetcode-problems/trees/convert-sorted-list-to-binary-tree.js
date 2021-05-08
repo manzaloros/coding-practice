@@ -37,44 +37,98 @@ class ListNode {
   }
 }
 
+/*
+  TC: O(n log n)
+  SC: O(log n)
+*/
 const sortedListToBST = (head) => {
-  // Get length
-  let length = 0;
+  if (!head) return null;
+  if (!head.next) return new TreeNode(head.val);
+
+  let [prev, slow, fast] = [new ListNode(), head, head];
+  prev.next = head;
+
+  // Slow will end up being the middle element in the list
+  while (fast && fast.next) {
+    fast = fast.next.next;
+    slow = slow.next;
+    prev = prev.next;
+  }
+
+  // Sever connection before slow, the middle of the list
+  prev.next = null;
+
+  const root = new TreeNode(slow.val);
+
+  root.left = sortedListToBST(head);
+  root.right = sortedListToBST(slow.next || null);
+
+  return root;
+};
+
+/*
+  TC: O(n), made better than the previous because you're using the array for
+  O(n) lookups
+  SC: O(n), made worse than the previous because you're using the array for storage
+*/
+const sortedListToBSTWithArray = (head) => {
+  const values = [];
   let current = head;
-  let previous = null;
   while (current) {
-    current.prev = previous;
-    previous = current;
+    values.push(current.val);
+    current = current.next;
+  }
+
+  const recurse = (left = 0, right = values.length - 1) => {
+    if (left > right) return null;
+
+    const middle = Math.floor((left + right) / 2);
+
+    const root = new TreeNode(values[middle]);
+
+    if (left === right) return root;
+
+    root.left = recurse(left, middle - 1);
+    root.right = recurse(middle + 1, right);
+    return root;
+  };
+
+  return recurse();
+};
+
+/*
+  TC: O(n) since you have to traverse the whole list
+  SC: O(log n) since the balanced BST is bound by log(n) height
+*/
+const sortedListToBSTInOrder = (head) => {
+  // Get length of list
+  let current = head;
+  let length = 0;
+  while (current) {
     current = current.next;
     length += 1;
   }
-  current = head;
-  // Store middle node and index for later
-  const middle = Math.floor(length / 2);
 
-  for (let i = 0; i < middle; i += 1) {
-    current = current.next;
-  }
-  let current2 = current;
+  /* Since array is sorted you can traverse the tree "in order"
+    So l and r start at the bounds of the array.
+   */
+  const convert = (l = 0, r = length - 1) => {
+    if (l > r) return null;
 
-  // Iterate backwards from the middle of the list adding nodes
-  const root = new TreeNode(current.val);
-  let currentNode = root;
-  for (let i = middle; i > 0; i -= 1) {
-    currentNode.left = new TreeNode(current.prev?.val);
-    current = current.prev;
-    currentNode = currentNode.left;
-  }
+    const mid = Math.floor((l + r) / 2);
 
-  // Iterate forwards from the middle of the list adding nodes
-  currentNode = root;
-  for (let i = middle; i < length - 1; i += 1) {
-    currentNode.right = new TreeNode(current2.next?.val);
-    current2 = current2.next;
-    currentNode = currentNode.right;
-  }
+    const left = convert(l, mid - 1);
 
-  return root;
+    const node = new TreeNode(head.val);
+    node.left = left;
+
+    head = head.next;
+
+    node.right = convert(mid + 1, r);
+    return node;
+  };
+
+  return convert();
 };
 
 const l = new ListNode(-10);
@@ -83,4 +137,4 @@ l.next.next = new ListNode(0);
 l.next.next.next = new ListNode(5);
 l.next.next.next.next = new ListNode(9);
 
-sortedListToBST(l);
+console.log(sortedListToBSTInOrder(l));
