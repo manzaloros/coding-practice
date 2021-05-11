@@ -45,7 +45,7 @@ const countPrimesOptimized = (n) => {
   // If n is 2, there are no primes less than 2
   if (n < 3) return 0;
 
-  // Only half the number below n could be primes since half are even and thus
+  // Only half the numbers below n could be primes since half are even and thus
   // are not prime
   let count = Math.floor(n / 2);
 
@@ -63,6 +63,7 @@ const countPrimesOptimized = (n) => {
       // We skip evens because we initialized count to n / 2
       for (let j = i * i; j < n; j += 2 * i) {
         if (!sieve[j]) {
+          // Subtract from count when another composite is formed
           count -= 1;
           sieve[j] = true;
         }

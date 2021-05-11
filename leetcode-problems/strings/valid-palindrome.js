@@ -37,18 +37,51 @@ const isPalindrome = (s) => {
     while (j >= 0 && !isAlphanumeric(s.charAt(j))) {
       j -= 1;
     }
-    if (isUpperCase(s.charAt(i)) && isUpperCase(s.charAt(j))) {
-      if (s.charAt(i) !== s.charAt(j)) return false;
-    } else if (!isUpperCase(s.charAt(i)) && !isUpperCase(s.charAt(j))) {
-      if (s.charAt(i) !== s.charAt(j)) return false;
-    } else if (!isUpperCase(s.charAt(i))) {
-      if ((s.charCodeAt(i) - 32) !== s.charCodeAt(j)) return false;
-    } else if (!isUpperCase(s.charAt(j))) {
-      if ((s.charCodeAt(j) - 32) !== s.charCodeAt(i)) return false;
+
+    const left = s.charAt(i);
+    const leftCode = s.charCodeAt(i);
+    const right = s.charAt(j);
+    const rightCode = s.charCodeAt(j);
+
+    if (isUpperCase(left) && isUpperCase(right)) {
+      if (left !== right) return false;
+    } else if (!isUpperCase(left) && !isUpperCase(right)) {
+      if (left !== right) return false;
+    } else if (!isUpperCase(left)) {
+      if ((leftCode - 32) !== rightCode) return false;
+    } else if (!isUpperCase(right)) {
+      if ((rightCode - 32) !== leftCode) return false;
     }
   }
   return true;
 };
 
-// console.log(isPalindrome('A man, a plan, a canal: Panama')); // true
+/*
+Two pointer technique to work inward from the left and right
+*/
+const isLetter = (s) => s.match(/[a-z0-9]/);
+
+const isPalindromeNotStupid = (s, [start, end] = [0, s.length - 1]) => {
+  while (start < end) {
+    const [left, right] = [s[start].toLowerCase(), s[end].toLowerCase()];
+    if (!isLetter(left)) {
+      start += 1;
+      continue;
+    }
+
+    if (!isLetter(right)) {
+      end -= 1;
+      continue;
+    }
+
+    if (left !== right) return false;
+
+    start += 1;
+    end -= 1;
+  }
+
+  return true;
+};
+
+console.log(isPalindrome('A man, a plan, a canal: Panama')); // true
 console.log(isPalindrome(' ')); // true
