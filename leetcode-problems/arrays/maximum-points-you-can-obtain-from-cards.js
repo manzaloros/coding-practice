@@ -52,9 +52,67 @@ const maxScore = (cardPoints, k, { length } = cardPoints) => {
 
   return max;
 };
+/*
+  TC: O(k)
+  SC: O(k)
+*/
+const maxScoreDP = (cardPoints, k, { length } = cardPoints) => {
+  // Need the 0th element to be 0 so that it leaves room for the other array to
+  // represent length 3
+  const frontSetOfCards = new Uint8Array(k + 1).fill(0);
+  const rearSetOfCards = new Uint8Array(k + 1).fill(0);
 
-console.log(maxScore([1, 79, 80, 1, 1, 1, 200, 1], 3));
+  // Each array represents the prefix sum (like a running sum) of the cP array
+  for (let i = 0; i < k; i += 1) {
+    frontSetOfCards[i + 1] = frontSetOfCards[i] + cardPoints[i];
+    rearSetOfCards[i + 1] = rearSetOfCards[i] + cardPoints[length - i - 1];
+  }
+
+  let max = 0;
+
+  // i represents how many cards you will take from the front
+  // Each time you increment i you remove a card from the back
+  // Since the created arrays represent the running sum of the numbers, you can
+  // just add them together
+  for (let i = 0; i <= k; i += 1) {
+    const possible = frontSetOfCards[i] + rearSetOfCards[k - i];
+    max = Math.max(possible, max);
+  }
+
+  return max;
+};
+
+/*
+  TC: O(k)
+  SC: O(1)
+*/
+const maxScoreDPSpaceOptimized = (cardPoints, k, { length } = cardPoints,
+  [frontScore, rearScore] = [0, 0]) => {
+  // Initialize front score to be the sum of k elements from the beginning
+  // (picking none from the rear)
+  for (let i = 0; i < k; i += 1) {
+    frontScore += cardPoints[i];
+  }
+
+  let max = frontScore;
+
+  // i starts at k - 1, picking an element from the rear and removing one from
+  // the beginning
+  // "Slide" the two windows, deleting from the beginning and adding to the
+  // rear, checking the max as you go
+  for (let i = k - 1; i >= 0; i -= 1) {
+    frontScore -= cardPoints[i];
+    rearScore += cardPoints[length - k + i];
+    const currentScore = frontScore + rearScore;
+    max = Math.max(currentScore, max);
+  }
+
+  return max;
+};
+
+console.log(maxScoreDPSpaceOptimized([1, 79, 80, 1, 1, 1, 200, 1], 3));
 console.log(maxScore([1, 1000, 1], 1));
 console.log(maxScore([9, 7, 7, 9, 7, 7, 9], 7));
 console.log(maxScore([10], 1));
 console.log(maxScore([1, 2, 3, 4, 5, 6, 1], 3));
+console.log(maxScore([96, 90, 41, 82, 39, 74, 64, 50, 30], 8));
