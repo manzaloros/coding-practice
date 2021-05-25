@@ -38,8 +38,8 @@ const search = (nums, target) => {
   let lowerBound = -1;
 
   while (lowerBound + 1 < upperBound) {
-    let middleIndex = Math.floor((upperBound - lowerBound) / 2) + lowerBound;
-    let middle = nums[middleIndex];
+    const middleIndex = Math.floor((upperBound - lowerBound) / 2) + lowerBound;
+    const middle = nums[middleIndex];
     if (middle === target) {
       return middleIndex;
     }
@@ -50,4 +50,26 @@ const search = (nums, target) => {
     }
   }
   return -1;
-}
+};
+
+/*
+  Use iterative rather than recursive. Recursive stores calls on the callstack,
+  which has a max of 60 frames. Since search uses O log2 n space, we would have
+  to have a number that is greater than 2 ^ 60th power to overflow the stack,
+  which is probably too big of a number anyway.
+
+  Iterative just keeps track using pointers.
+*/
+const searchLeetCode = function (nums, target, left = 0, right = nums.length - 1) {
+  while (left <= right) {
+    const mid = Math.floor((right + left) / 2);
+    if (nums[mid] === target) return mid;
+    if (target > nums[mid]) {
+      left = mid + 1;
+    } else {
+      right = mid - 1;
+    }
+  }
+
+  return -1;
+};

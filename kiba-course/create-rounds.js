@@ -14,12 +14,21 @@ const createUniquePairings = (numOfPlayers) => {
   }
 
   const pairings = [];
+  const combinations = {};
 
   for (let i = 0; i < alphas.length; i += 1) {
+    combinations[alphas[i]] = [];
     for (let j = i + 1; j < alphas.length; j += 1) {
       pairings.push(alphas[i] + alphas[j]);
+      combinations[alphas[i]].push(alphas[i] + alphas[j]);
     }
   }
+
+  const recurse = (pairsLeft, combo) => {
+    if (pairsLeft.length === 0) {
+
+    }
+  };
 
   return pairings;
 };
