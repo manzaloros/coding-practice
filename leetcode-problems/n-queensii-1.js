@@ -16,19 +16,59 @@ Constraints:
 1 <= n <= 9 */
 
 const totalNQueens = (n) => {
-  const notUnderAttack = (row, col) => {
+  const solutions = [];
 
+  const createBoard = (state) => {
+    const board = [];
+
+    for (let row = 0; row < n; row += 1) {
+      board.push(String(state[row].join('')));
+    }
+
+    return board;
   };
 
-  const backtrack = (row, col) => {
-    for (let i = row; row < n; row += 1) {
-      if (notUnderAttack(row, col)) {
-        if (col === n - 1) {
+  const backtrack = (row, diagonals, antiDiagonals, cols, state) => {
+    if (row === n) {
+      solutions.push(createBoard(state));
+    } else {
+      for (let col = 0; col < n; col += 1) {
+        const currDiagonal = row - col;
+        const currAntiDiagonal = row + col;
 
-        } else {
+        if (!(cols.has(col)
+        || diagonals.has(currDiagonal)
+        || antiDiagonals.has(currAntiDiagonal))) {
+          cols.add(col);
+          diagonals.add(currDiagonal);
+          antiDiagonals.add(currAntiDiagonal);
+          state[row][col] = 'Q';
 
+          backtrack(row + 1, diagonals, antiDiagonals, cols, state);
+
+          cols.delete(col);
+          diagonals.delete(currDiagonal);
+          antiDiagonals.delete(currAntiDiagonal);
+          state[row][col] = '.';
         }
       }
     }
   };
+
+  const solve = () => {
+    const board = [];
+    for (let i = 0; i < n; i += 1) {
+      board[i] = [];
+      for (let j = 0; j < n; j += 1) {
+        board[i][j] = '.';
+      }
+    }
+
+    backtrack(0, new Set(), new Set(), new Set(), board);
+    return solutions;
+  };
+
+  return solve();
 };
+
+console.log(totalNQueens(4));
