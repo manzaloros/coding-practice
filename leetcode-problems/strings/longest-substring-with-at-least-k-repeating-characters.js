@@ -115,4 +115,22 @@ const longestSubstring = (s, k) => {
   return result;
 };
 
+const aChar = 'a'.charCodeAt();
+const longestSubstringAusten = function (s, k) {
+  if (!s || !s.length) return 0;
+  if (k <= 1) return s.length;
+  const counts = new Array(26).fill(0);
+  const invalids = new Set();
+  for (let i = 0; i < s.length; i++) {
+    const code = s.charCodeAt(i) - aChar;
+    counts[code]++;
+    if (counts[code] === 1) invalids.add(s.charAt(i));
+    if (counts[code] === k) invalids.delete(s.charAt(i));
+  }
+  if (!invalids.size) return s.length;
+  const split = new RegExp(Array.from(invalids.keys()).join('|'));
+  const sections = s.split(split);
+  return Math.max(...sections.map((section) => longestSubstringAusten(section, k)));
+};
+
 longestSubstring('caaabb', 2);
