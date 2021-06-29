@@ -18,17 +18,23 @@ Input: s = "azxxzy" Output: "ay"
 Constraints:
 
 1 <= s.length <= 105 s consists of lowercase English letters. */
-
+/*
+  Time: O(length of string)
+  Space: O(length of string)
+*/
 const removeDuplicates = (s) => {
   const stack = [];
   let index = 0;
 
   while (index < s.length) {
-    if (stack[stack.length - 1] === s[index]) {
+    const currentChar = s[index];
+
+    if (stack[stack.length - 1] === currentChar) {
       stack.pop();
     } else {
-      stack.push(s[index]);
+      stack.push(currentChar);
     }
+
     index += 1;
   }
 
