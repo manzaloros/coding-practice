@@ -73,4 +73,29 @@ const minDistance = (word1, word2) => {
   return backtrack(0, 0);
 };
 
-minDistance('horse', 'ros');
+const minDistanceBottomUp = (word1, word2) => {
+  const matched = Array(word1.length + 1).fill([]);
+  for (let i = 0; i <= word1.length; i += 1) {
+    matched[i][0] = i;
+  }
+
+  for (let i = 0; i <= word2.length; i += 1) {
+    matched[0][i] = i;
+  }
+
+  for (let i = 0; i < word1.length; i += 1) {
+    for (let j = 0; j < word2.length; j += 1) {
+      if (word1[i] === word2[j]) {
+        matched[i + 1][j + 1] = matched[i][j];
+      } else {
+        matched[i + 1][j + 1] = Math.min(
+          Math.min(matched[i][j + 1], matched[i + 1][j]), matched[i][j],
+        ) + 1;
+      }
+    }
+  }
+
+  return matched[word1.length][word2.length];
+};
+
+minDistanceBottomUp('horse', 'ros');
