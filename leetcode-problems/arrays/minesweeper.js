@@ -49,26 +49,18 @@ When you reveal a blank, recursively reveal all other blanks around it
 Same with numbers, recursively reveal them.
 */
 class Cell {
-  constructor([row, col], board, isInBounds) {
+  constructor([row, col], board) {
     this.row = row;
     this.col = col;
     this.val = board[row][col];
-    this.neighbors = (() => [[row + 1, col],
-      [row - 1, col],
-      [row, col + 1],
-      [row, col - 1],
-      [row - 1, col - 1],
-      [row + 1, col + 1],
-      [row + 1, col - 1],
-      [row - 1, col + 1]].filter((neighbor) => isInBounds(neighbor)))();
     this.key = `${row}:${col}`;
   }
 
-  checkNeighbors(board) {
+  checkNeighbors(board, neighbors) {
     const { row, col } = this;
     let mines = 0;
 
-    this.neighbors.forEach(([neighborRow, neighborCol]) => {
+    neighbors.forEach(([neighborRow, neighborCol]) => {
       if (board[neighborRow][neighborCol] === 'M') mines += 1;
     });
 
@@ -77,10 +69,23 @@ class Cell {
 }
 
 const updateBoard = (board, click) => {
-  const updateCell = (cell) => {
+  const isInBounds = ([row, col], seen, key) => (row >= 0 && col >= 0
+    && row < board.length && col < board[0].length);
+
+  const getNeighbors = (row, col) => [[row + 1, col],
+    [row - 1, col],
+    [row, col + 1],
+    [row, col - 1],
+    [row - 1, col - 1],
+    [row + 1, col + 1],
+    [row + 1, col - 1],
+    [row - 1, col + 1]].filter((neighbor) => isInBounds(neighbor));
+
+  const updateCell = (cell, neighbors) => {
     if (cell.val !== 'M') {
       let adjacentMines = 0;
-      adjacentMines = cell.checkNeighbors(board);
+
+      adjacentMines = cell.checkNeighbors(board, neighbors);
 
       if (adjacentMines === 0) {
         board[cell.row][cell.col] = 'B';
@@ -96,27 +101,29 @@ const updateBoard = (board, click) => {
     return -1;
   };
 
-  const isInBounds = ([row, col]) => (row >= 0 && col >= 0
-    && row < board.length && col < board[0].length);
-
-  const firstCell = new Cell(click, board, isInBounds);
+  const firstCell = new Cell(click, board);
   const queue = [firstCell];
   const seen = new Set();
 
   while (queue.length > 0) {
     const current = queue.shift();
+    // We need this conditional
+    if (seen.has(current.key)) continue;
+
+    const neighbors = getNeighbors(current.row, current.col);
 
     seen.add(current.key);
 
-    const isMine = updateCell(current);
+    const isMine = updateCell(current, neighbors);
 
     if (isMine === -1) return board;
 
     if (isMine === 0) {
-      for (let i = 0; i < current.neighbors.length; i += 1) {
-        const neighbor = new Cell(current.neighbors[i], board, isInBounds);
+      for (let i = 0; i < neighbors.length; i += 1) {
+        const neighbor = new Cell(neighbors[i], board);
 
-        if (!seen.has(neighbor.key) && neighbor) queue.push(neighbor);
+        // Taking the conditional out here also works...
+        if (!seen.has(neighbor.key)) queue.push(neighbor);
       }
     }
   }

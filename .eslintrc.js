@@ -15,5 +15,9 @@ module.exports = {
     'no-unused-vars': 'off',
     'max-classes-per-file': 'off',
     'no-param-reassign': 'off',
+    'prefer-const': ['off', {
+      destructuring: 'any',
+      ignoreReadBeforeAssign: true,
+    }],
   },
 };
