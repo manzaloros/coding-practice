@@ -51,12 +51,12 @@ const gameOfLife = (board) => {
     let liveNeighbors = 0;
 
     // Iterate over neighbors
-    for (let i = 0; i < 3; i += 1) {
-      for (let j = 0; j < 3; j += 1) {
+    neighbors.forEach((row) => {
+      neighbors.forEach((col) => {
         // [0,0] will be self and isn't a neighbor
-        if (!(neighbors[i] === 0 && neighbors[j] === 0)) {
-          const neighborRow = (selfRow + neighbors[i]);
-          const neighborCol = (selfCol + neighbors[j]);
+        if (!(row === 0 && col === 0)) {
+          const neighborRow = (selfRow + row);
+          const neighborCol = (selfCol + col);
 
           // Check if in bounds and if it's a neighbor
           if ((neighborRow < rows && neighborRow >= 0) && (neighborCol < cols && neighborCol >= 0)
@@ -64,8 +64,8 @@ const gameOfLife = (board) => {
             liveNeighbors += 1;
           }
         }
-      }
-    }
+      });
+    });
 
     return liveNeighbors;
   };
