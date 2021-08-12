@@ -44,6 +44,57 @@ const eraseOverlapIntervals = (intervals, { length } = intervals) => {
   return total;
 };
 
-console.log(eraseOverlapIntervals([[1, 2], [2, 3], [3, 4], [1, 3]]));
+const eraseOverlapIntervalsTopDown = (intervals) => {
+  intervals.sort((a, b) => (a[0] < b[0] ? -1 : 1));
+  const { length } = intervals;
+
+  const backtrack = (index, start) => {
+    // If you're on the first index, you don't need to remove any intervals.
+    if (index === 0) return 0;
+
+    // Tracks intervals you have chosen to remove
+    let result = 0;
+
+    if (start >= intervals[index - 1][1]) {
+      result = backtrack(index - 1, intervals[index - 1][0]);
+    } else {
+      result = Math.min(backtrack(index - 1, start),
+        backtrack(index - 1, intervals[index - 1][0])) + 1;
+    }
+
+    return result;
+  };
+
+  return backtrack(length - 1, intervals[length - 1][1]);
+};
+
+const eraseOverlapIntervalsTopDownBetter = (intervals) => {
+  intervals.sort((a, b) => (a[0] < b[0] ? -1 : 1));
+  const { length } = intervals;
+  const memo = new Map();
+
+  const backtrack = (prev, curr) => {
+    if (curr === length) return 0;
+
+    const key = `${prev}:${curr}`;
+    if (memo.has(key)) return memo.get(key);
+
+    let take = Infinity;
+    let notTake = 0;
+
+    if (prev === -1 || intervals[prev][1] <= intervals[curr][0]) take = backtrack(curr, curr + 1);
+
+    notTake = backtrack(prev, curr + 1) + 1;
+
+    const winner = Math.min(take, notTake);
+    memo.set(key, winner);
+
+    return winner;
+  };
+
+  return backtrack(-1, 0);
+};
+
+console.log(eraseOverlapIntervalsTopDown([[1, 2], [2, 3], [3, 4], [1, 3]]));
 // console.log(eraseOverlapIntervals([[1, 2], [1, 2], [1, 2]]));
 // console.log(eraseOverlapIntervals([[1, 2], [2, 3]]));
