@@ -43,6 +43,8 @@ const eraseOverlapIntervals = (intervals, { length } = intervals) => {
 
   return total;
 };
+// Try this to see why you have to sort by ending interval:
+eraseOverlapIntervals([[1, 100], [11, 22], [1, 11], [2, 12]]);
 
 const eraseOverlapIntervalsTopDown = (intervals) => {
   intervals.sort((a, b) => (a[0] < b[0] ? -1 : 1));

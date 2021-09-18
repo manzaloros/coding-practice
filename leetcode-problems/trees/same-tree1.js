@@ -1,11 +1,11 @@
-let isSameTreeRecursive = (p, q) => {
-  if (p === null && q === null) return true;
+const isSameTree = (p, q) => {
+  if (!p && !q) return true;
 
-  if (p === null || q === null) return false;
+  if (!p || !q) return false;
 
   if (p.val !== q.val) return false;
 
-  return isSameTreeRecursive(p.left, q.left) && isSameTreeRecursive(p.right, q.right);
+  return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
 };
 
 const check = (p, q) => {
@@ -18,15 +18,14 @@ const check = (p, q) => {
   return true;
 };
 
-const isSameTree = (p, q) => {
+const isSameTreeIterative = (p, q) => {
   if (!p && !q) return true;
 
   // if (!p || !q) return false;
 
   // if (p.val !== q.val) return false;
 
-  // Make sure to push an ARRAY of p and q
-  const stack = [[p, q]];
+  const stack = [p, q];
 
   while (stack.length > 0) {
     const [currP, currQ] = stack.pop();
@@ -38,10 +37,8 @@ const isSameTree = (p, q) => {
     // if (currP.val !== currQ.val) return false;
 
     if (check(currP, currQ)) {
-      if (currP && currQ) {
-        stack.push([currP.left, currQ.left]);
-        stack.push([currP.right, currQ.right]);
-      }
+      stack.push([currP.left, currQ.left]);
+      stack.push([currP.right, currQ.right]);
     } else {
       return false;
     }

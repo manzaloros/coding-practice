@@ -19,6 +19,27 @@ const goodNodesIterative = (root) => {
   return goodNodes;
 };
 
+const countGoodNodesBFS = (root) => {
+  let goodNodes = 0;
+
+  let queue = [[root, -Infinity]];
+
+  while (queue.length > 0) {
+    let [node, max] = queue.shift();
+    if (node) {
+      if (node.val >= max) {
+        goodNodes += 1;
+        max = node.val;
+      }
+
+      queue.push([node.left, max]);
+      queue.push([node.right, max]);
+    }
+  }
+
+  return goodNodes;
+};
+
 const goodNodesRecursive = (root) => {
   let goodNodes = 0;
 
