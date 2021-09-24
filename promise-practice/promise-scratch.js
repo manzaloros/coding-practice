@@ -62,9 +62,11 @@ class SimplePromise {
             reject(err);
           }
         });
+
         this.onRejectedCallbacks.push(() => {
           try {
             const rejectFromLastPromise = onRejected(this.value);
+
             reject(rejectFromLastPromise);
           } catch (err) {
             reject(err);
