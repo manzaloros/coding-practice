@@ -90,6 +90,6 @@ let minWindowFromTemplate = (s, t) => {
   return '';
 };
 
-// minWindowFromTemplate('ADOBECODEBANC',
-// 'ABC');
+minWindowFromTemplate('ADOBECODEBANC',
+  'ABC');
 minWindowFromTemplate('a', 'aa');

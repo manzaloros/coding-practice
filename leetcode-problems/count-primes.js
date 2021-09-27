@@ -74,8 +74,43 @@ const countPrimesOptimized = (n) => {
   return count;
 };
 
-console.log(countPrimes(5 * (10 ** 6)));
-console.log(countPrimes(10));
-console.log(countPrimes(4));
-console.log(countPrimesOptimized(5 * (10 ** 6)));
-console.log(countPrimesOptimized(3));
+/* Given an even number (greater than 2 ), print two prime numbers whose sum
+will be equal to given number. There may be several combinations possible. Print
+only first such pair.  */
+const findFirstTwoPrimes = (num) => {
+  const sieve = Array(num).fill(true);
+  sieve[0] = false;
+  sieve[1] = false;
+
+  for (let i = 2; i * i < num; i += 1) {
+    const curr = sieve[i];
+    if (curr === true) {
+      // mark every multiple of current prime^2 false. increment by i. So,
+      // starting at 2, j would be 2 * 2 === 4. Then the next number that isn't
+      // prime would be 6. Then 8, etc. The limit for the inner loop is your
+      // input num, which makes sense because you don't care about any higher
+      // prime numbers than that
+      for (let j = i * i; j < num; j += i) {
+        sieve[j] = false;
+      }
+    }
+  }
+
+  // every element of sieve that is true is a prime num less than num
+  // iterate through sieve. For each true value, if the complement is also true,
+  // return the first of those values you find
+
+  for (let i = 0; i < sieve.length; i += 1) {
+    const curr = sieve[i];
+    // find complement and return first occurence
+    if (curr && sieve[num - i]) return [i, num - i];
+  }
+};
+
+// console.log(countPrimes(5 * (10 ** 6)));
+// console.log(countPrimes(10));
+// console.log(countPrimes(4));
+// console.log(countPrimesOptimized(5 * (10 ** 6)));
+// console.log(countPrimesOptimized(3));
+// findFirstTwoPrimes(4); // [2,2]
+findFirstTwoPrimes(74);
