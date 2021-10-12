@@ -19,6 +19,10 @@ let findDuplicates = function (nums) {
     // twice in the array. Make sure to set it back to negative once you've
     // added it to the result because you might count it again unnecessarily later.
     if (nums[indexToCheck] > 0) {
+      // Basically, if you find a positive num at the index you're checking,
+      // that means that you have seen that index twice, because you make it
+      // negative each time. That means you have seen your particular number
+      // twice (NOT the index), so you need to add the number to seen.
       ans.push(Math.abs(num));
 
       nums[indexToCheck] *= -1;
@@ -27,3 +31,5 @@ let findDuplicates = function (nums) {
 
   return ans;
 };
+
+findDuplicates([4, 3, 2, 7, 8, 2, 3, 7]);
