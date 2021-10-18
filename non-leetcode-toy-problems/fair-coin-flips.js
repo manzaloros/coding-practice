@@ -4,6 +4,10 @@
   How many rounds do you play before one coin remains?
 
   if n = 1, return 0? If n === 2 return 1?
+
+  doesn't return a decimal like true Math.log2(n) would. But you can't have a
+  fraction of a coin if you're dealing with real coins, so it depends on the
+  philosophical definition of the question.
 */
 const howManyRounds = (n) => {
   if (n <= 1) return 0;
