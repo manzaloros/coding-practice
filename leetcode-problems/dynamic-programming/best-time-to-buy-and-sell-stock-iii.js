@@ -1,9 +1,17 @@
+/*
+  non memo:
+    time: O(2^length)
+    space: O(length) callstack
+
+  memo:
+    time: O(length * 2 * 1)
+    space: O(length * 2 * 1) memo and callstack
+*/
 let maxProfit = function (prices) {
   const memo = new Map();
 
   const backtrack = (index, canBuy, transactions) => {
     if (index >= prices.length) return 0;
-    if (transactions > 2) return -Infinity;
 
     const key = `${index}:${canBuy}:${transactions}`;
     if (memo.has(key)) return memo.get(key);
