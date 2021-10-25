@@ -1,3 +1,5 @@
+const { MaxPriorityQueue } = require('@datastructures-js/priority-queue');
+
 let frequencySort = function (s) {
   // O(n)
   const makeMap = (freq, char) => freq.set(char, (freq.get(char) || 0) + 1);
@@ -54,4 +56,34 @@ const frequencySortBuckets = (s) => {
   return buckets.reduceRight(emptyBuckets, '');
 };
 
-frequencySortBuckets('abaaacda');
+const frequencySortPQ = (s) => {
+  // O(n) space, time
+  const split = s.split('');
+  let result = '';
+
+  const makeMap = (freq, char) => freq.set(char, (freq.get(char) || 0) + 1);
+
+  // time: O(n), space: O(n)
+  const map = split.reduce(makeMap, new Map());
+
+  const pq = new MaxPriorityQueue();
+
+  // O(n * log 26)
+  map.forEach((freq, char) => {
+    // O (log 26)
+    pq.enqueue(char, freq);
+  });
+
+  // O(26) * n
+  while (pq.size() > 0) {
+    // O(log 26)
+    const { priority: freq, element: char } = pq.dequeue();
+
+    // O(n)
+    result += char.repeat(freq);
+  }
+
+  return result;
+};
+
+frequencySortPQ('abaaacda');
