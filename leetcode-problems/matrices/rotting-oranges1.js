@@ -1,16 +1,4 @@
-/**
- * @param {number[][]} grid
- * @return {number}
-
- count fresh oranges
-
- BFS from each starting orange [coord, minutesElapsed = 0]
- change dequeued to 2 (rotten)
- decrement total fresh orange count each visited orange
- in
-
- return -1 if fresh oranges > 0 or minutes elapsed
- */
+// Don't need a seen Set because you never visit a rotten orange cell
 let orangesRotting = function (grid) {
   const [rows, cols] = [grid.length, grid[0].length];
   let minutesElapsed = 0;
@@ -34,25 +22,18 @@ let orangesRotting = function (grid) {
     nRow >= 0 && nRow < rows && nCol >= 0 && nCol < cols && grid[nRow][nCol] === 1
   ));
 
-  const seen = new Set();
-
   while (queue.length > 0) {
     const [[row, col], currMinutes] = queue.shift();
-    const key = `${row}:${col}`;
 
-    if (!seen.has(key)) {
-      seen.add(key);
+    minutesElapsed = Math.max(minutesElapsed, currMinutes);
 
-      minutesElapsed = Math.max(minutesElapsed, currMinutes);
+    if (freshCount > 0) {
+      getNeighbors(row, col).forEach(([nRow, nCol]) => {
+        freshCount -= 1;
+        grid[nRow][nCol] = 2;
 
-      if (freshCount > 0) {
-        getNeighbors(row, col).forEach(([nRow, nCol]) => {
-          freshCount -= 1;
-          grid[nRow][nCol] = 2;
-
-          queue.push([[nRow, nCol], currMinutes + 1]);
-        });
-      }
+        queue.push([[nRow, nCol], currMinutes + 1]);
+      });
     }
   }
 
