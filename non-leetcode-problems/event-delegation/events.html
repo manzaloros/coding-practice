@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul id='list'>
+
+      <li>
+        <a href='#'>first item</a>
+      </li>
+
+      <li>
+        <a href='#'>second item</a>
+      </li>
+
+    </ul>
+  </body>
+  <script>
+    const destroyElement = (e, {target: {parentNode: listItem}} = e) => {
+      // e.target is the anchor element
+      // The individual list item clicked
+      // const listItem = e.target.parentNode;
+      const list = listItem.parentNode
+
+      list.removeChild(listItem);
+      e.preventDefault();
+    }
+
+    document.getElementById('list').addEventListener('click', destroyElement)
+  </script>
+</html>

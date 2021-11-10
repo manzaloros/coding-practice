@@ -1,0 +1,30 @@
+/*
+  From second answer:
+  https://stackoverflow.com/questions/2603700/how-to-align-3-divs-left-center-right-inside-another-div?rq=1
+*/
+#container {
+  /* flex */
+  /* display: flex;
+  justify-content: space-between;
+  background-color: lightyellow */
+}
+
+#container > div {
+  /* flex or floats */
+  width: 300px;
+  height: 400px;
+  border: 2px dashed red;
+}
+/* if using floats */
+#div1 {
+  float: left;
+}
+
+/* this one is the third div */
+#div3 {
+  margin: 0 auto;
+}
+
+#div2 {
+  float: right;
+}
