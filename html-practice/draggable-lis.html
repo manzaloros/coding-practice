@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <ul class='draggableContent'>
+      <!-- <li>1</li>
+      <li>2</li>
+      <li>3</li> -->
+    </ul>
+
+    <script>
+      const ul = document.getElementsByClassName('draggableContent')[0];
+
+      for (let i = 1; i < 4; i += 1) {
+        const li = document.createElement('li', )
+        const text = document.createTextNode(`${i}`)
+        li.appendChild(text)
+
+        ul.appendChild(li)
+      }
+
+      // querySelectorAll returns list of all items matching the CSS selector.
+      // Space separate the selector to add specificity.
+      const items = document.querySelectorAll('.draggableContent li')
+      let dragEl;
+
+      const dragstart = function(e) {
+        /* e is event object, has information about the event */
+        dragEl = this;
+
+        /* Just saying you can move the object */
+        e.dataTransfer.effectAllowed = 'move';
+        /* Adds the target's inner html to the data transfer object, basically
+        saying we will move the text inside the element */
+        e.dataTransfer.setData('text/html', this.innerHTML)
+      }
+
+      const dragenter = function (e) {
+        this.classList.add('dragOver')
+      }
+
+      const dragover = function (e) {
+        e.preventDefault(); /* needed to allow a drop to happen */
+      }
+
+      const dragend = function (e) {
+        items.forEach(item => item.classList.remove('dragOver'));
+      }
+
+      const dragleave = function (e) {
+        this.classList.remove('dragOver')
+      }
+
+      const drop = function (e) {
+        /* not sure if needed. Stops event from propagating the capture and
+        bubble phases */
+        e.stopPropagation();
+
+        if (dragEl !== this) {
+          dragEl.innerHTML = this.innerHTML;
+          this.innerHTML = e.dataTransfer.getData('text/html')
+        }
+
+        return false;
+      }
+
+      items.forEach(item => {
+        item.setAttribute('draggable', true)
+
+        item.addEventListener('dragenter', dragenter)
+        item.addEventListener('dragstart', dragstart)
+        item.addEventListener('dragover', dragover)
+        item.addEventListener('dragend', dragend)
+        item.addEventListener('dragleave', dragleave)
+        item.addEventListener('drop', drop)
+      })
+    </script>
+
+    <style>
+      .draggableContent {
+        margin: 0 20%; /* top bottom */
+      }
+
+      .dragOver {
+        color: blue;
+      }
+
+      .draggableContent li {
+        display: block;
+        background: #ccc;
+        margin: 3px 0;
+        padding: 10px; /* applies to all sides */
+      }
+    </style>
+
+  </body>
+</html>
