@@ -1,20 +1,15 @@
-let minStartValue = function (nums) {
-  let minStart = 1;
-  let curr = minStart;
+const minStartValue = (nums) => nums.reduce(([minStart, runningTotal], num, i) => {
+  const currSum = num + runningTotal;
 
-  nums.forEach((num) => {
-    if (num + curr < 1) {
-      let extraNeeded = 1 - (curr + num);
-      minStart += (extraNeeded);
+  if (currSum < 1) {
+    runningTotal = 1;
+    const extraNeeded = runningTotal - currSum;
 
-      curr = 1;
-    } else {
-      curr += num;
-    }
-  });
+    minStart += extraNeeded;
+  } else runningTotal = currSum;
 
-  return minStart;
-};
+  return i === nums.length - 1 ? minStart : [minStart, runningTotal];
+}, [1, 1]);
 
 // minStartValue([-3, 2, -3, 4, 2]);
 minStartValue([1, -2, -3]);

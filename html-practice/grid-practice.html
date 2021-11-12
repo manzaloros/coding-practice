@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id='container' />
+
+    <script>
+      const container = document.getElementById('container');
+
+      const createBox = (el, i) => {
+        const box = document.createElement('div');
+        const textNode = document.createTextNode(i)
+
+        box.id = `box-${i}`;
+        box.classList.add('box')
+        box.append(textNode)
+
+        container.appendChild(box);
+      }
+
+      Array(9).fill().forEach(createBox)
+    </script>
+
+    <style>
+      #container {
+        display: grid;
+        min-height: 100vh;
+/*         grid-template-rows: repeat(3, 1fr); */
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .box {
+/*         border: dotted red; */
+        background-color: aliceblue;
+        margin: 10px;
+        /* only one value applies to all four sides */
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </body>
+</html>

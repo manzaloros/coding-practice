@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div class="container">
+      <input id='input' placeholder="type to-do here"/>
+      <button>Add To-do</button>
+      <ol class='to-do-list'/>
+    </div>
+
+    <script>
+      const input = document.getElementById('input')
+      const button = document.querySelectorAll('button')[0]
+      const list = document.querySelectorAll('.to-do-list')[0];
+
+      const markCompleted = (e) => {
+        e.target.classList.add('completed')
+      }
+
+      const addToDo = function(e) {
+        const text = input.value;
+
+        if (text.length > 0) {
+          const liText = document.createTextNode(text);
+
+          const li = document.createElement('li')
+          li.appendChild(liText);
+          li.classList.add('to-do')
+          li.addEventListener('click', markCompleted)
+
+          list.appendChild(li)
+        }
+
+        input.value = '';
+      }
+
+      button.addEventListener('click', addToDo) // click, not onclick
+    </script>
+
+    <style>
+      .container {
+        /* 100% of the VIEWPORT's height */
+        min-height: 100vh;
+        display: flex;
+        padding: 10px;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .container input {
+        width: 75%;
+        border: none;
+        border-radius: 0;
+        padding: 10px;
+        font-size: 16px;
+        text-align: center;
+      }
+
+      .container button {
+        font-size: 16px;
+        width: 25%;
+        border-radius: 0;
+        padding: 10px;
+        cursor: pointer;
+        color: #555;
+        background: #d9d9d9;
+        transition: 0.3s;
+      }
+
+      button:hover {
+        background-color: #bbb;
+      }
+
+      .container.ol {
+        margin: 0;
+        padding: 0;
+      }
+
+      .completed {
+        background-color: black;
+      }
+
+      .container.to-do {
+        width: 100%;
+        position: relative;
+        padding: 12px 8px 12px 40px;
+      }
+    </style>
+
+  </body>
+</html>
