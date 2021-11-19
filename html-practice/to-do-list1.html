@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+  <html>
+    <body>
+      <div class="todo-wrapper">
+        <h2>My to-do list</h2>
+        <p>Double-click an item to mark it as complete</p>
+
+        <form name="todo-adder">
+          <input type="text" id="todo-entry-box" />
+        </form>
+        <button id="add-button" class="pretty-button">Add</button>
+
+        <br />
+
+        <ol id="todo-list">
+        </ol>
+
+        <div id="control-wrapper">
+          <button id="clear-completed-button" class="pretty-button">Clear</button>
+          <button id="empty-button" class="pretty-button">Empty List</button>
+          <button id="save-button" class="pretty-button">Save List</button>
+        </div>
+      </div>
+
+      <script>
+        const addButton = document.getElementById('add-button')
+        const clearButton = document.getElementById('clear-completed-button')
+        const emptyListButton = document.getElementById('empty-button')
+        const saveListButton = document.getElementById('save-button')
+
+        const addToDoItem = () => {
+          const itemText = toDoEntryBox.value;
+          newToDoItem(itemText, false)
+        }
+
+        const clearCompletedToDoItems = () => {
+          const completedItems = toDoList.getElementsByClassName('completed')
+
+          while (completedItems.length > 0) completedItems.item(0).remove()
+        }
+
+        const emptyList = () => {
+          const toDoItems = toDoList.children;
+
+          while (toDoItems.length > 0) toDoItems.item(0).remove();
+        }
+
+        const saveList = () => {
+          alert('save clicked')
+        }
+
+        addButton.addEventListener('click', addToDoItem)
+        clearButton.addEventListener('click', clearCompletedToDoItems)
+        emptyListButton.addEventListener('click', emptyList)
+        saveListButton.addEventListener('click', saveList)
+
+        const toggleToDoItemState = ({target: {classList}}) => {
+          if (classList.contains('completed')) classList.remove('completed');
+          else classList.add('completed')
+        }
+
+        const newToDoItem = (text, completed) => {
+          const toDoItem = document.createElement('li')
+          const toDoItemText = document.createTextNode(text)
+
+          toDoItem.appendChild(toDoItemText)
+
+          if (completed) toDoItem.classList.add('completed')
+
+          toDoList.appendChild(toDoItem)
+          toDoItem.addEventListener('dblclick', toggleToDoItemState)
+        }
+
+        const toDoEntryBox = document.getElementById('todo-entry-box')
+        const toDoList = document.getElementById('todo-list')
+      </script>
+
+      <style>
+        body {
+          background-color: #49B749;
+          font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+        }
+
+        .todo-wrapper {
+          margin-top: 50px;
+          background-color: #fff;
+          /* applies to all 4 sides */
+          border-radius: 15px;
+          margin-left: auto;
+          margin-right: auto;
+          padding: 30px;
+          font-weight: 300;
+        }
+
+        .todo-wrapper h2 {
+          margin: 0;
+        }
+
+        .todo-wrapper p {
+          font-style: italic;
+          color: #666;
+          /* 5px top/bottom 0 left/right */
+          margin: 5px 0;
+          transition: all 0.5s ease-out;
+        }
+
+        .todo-wrapper ol li:nth-child(even) {
+          background: #ddd;
+        }
+
+        .todo-wrapper .completed {
+          text-decoration: line-through;
+          color: #666;
+        }
+
+        /* means .pretty-button that is a descendant of class .todo-wrapper.
+        Without the space would mean an element that has both classes */
+        .todo-wrapper .pretty-button {
+          margin: 10px 2px;
+          padding: 5px 20px;
+          border-radius: 15px;
+          background-color: #0093D5;
+          border: none;
+          color: #fff;
+          text-align: center;
+          /* Elements can sit next to each other unlike block. Also, can set
+          width and height on elements unlike inline. Top and bottom margin and
+          paddings are respected unlike inline. */
+          display: inline-block;
+          font-size: small;
+        }
+
+        .todo-wrapper .pretty-button:hover {
+          cursor: pointer;
+          opacity: 0.75;
+        }
+
+        .todo-wrapper input {
+          padding: 3px 6px;
+        }
+
+        .todo-wrapper form {
+          display: inline-block;
+        }
+
+        #control-wrapper {
+          text-align: center;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-around;
+        }
+
+        .todo-wrapper #clear-completed-button {
+          background-color: #49B749;
+        }
+
+        .todo-wrapper #empty-button {
+          background-color: #9B1C20;
+        }
+
+        .todo-wrapper #save-button {
+          background-color: #49B749;
+        }
+      </style>
+    </body>
+  </html>

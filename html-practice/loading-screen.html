@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+  <html>
+    <body>
+      <!-- block__element--modifier CSS naming convention -->
+      <section class="loading">
+        For new sidebar colors, click your workspace name, then Preferences >
+        Sidebar > Theme
+        <span class="loading__author"> - Your friends at Slack</span> <span class
+        ="loading__anim"></span>
+      </section>
+
+      <style>
+        body {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+        }
+
+        .loading {
+          /* 50% of the viewport */
+          max-width: 50%;
+          /* sets distance between lines of text. If unitless, you multiply the
+          value by the font size */
+          line-height: 1.4;
+          /* rem is font size of the root element */
+          font-size: 1.2rem;
+          font-weight: bold;
+          text-align: center;
+        }
+
+        .loading__author {
+          font-weight: normal;
+          font-size: 0.9rem;
+          color: rgba(189, 189, 189, 1);
+          /* only one value: applies to all four sides */
+          margin: 0.6rem 0 2rem 0;
+          display: block;
+        }
+
+        .loading__anim {
+          width: 35px;
+          height: 35px;
+          display: inline-block;
+          /* makes entire border grey */
+          border: 5px solid rgba(189, 189, 189, 0.25);
+          border-left-color: rgba(3, 155, 229, 1);
+          border-top-color: rgba(3, 155, 229, 1);
+
+          /* Makes it a circle instead of a box */
+          border-radius: 50%;
+          /* binds the animation to the class. This property is shorthand for
+          animation-name, animation-duration, animation-iteration-count,
+          animation timing function (specifies the speed curve of the animation) */
+          animation: rotate 600ms infinite linear;
+        }
+
+        /* holds what styles the element will have at certain times. Animation
+        will gradually change from the current style to the new style (here
+        there is no 'from' style) */
+        @keyframes rotate {
+          to {
+            /* if this were just a property on the element (as if it weren't in
+            an animation, it would just rotate the element 1 turn) */
+            transform: rotate(1turn);
+          }
+        }
+      </style>
+    </body>
+  </html>
