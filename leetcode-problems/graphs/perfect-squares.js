@@ -33,6 +33,16 @@ const numSquares = (n) => {
     .filter((square) => square <= n);
 
   const queue = new Set().add(n);
+  let level = 0;
+
+  while (queue.size > 0) {
+    level += 1;
+    const nextLevel = new Set();
+
+    queue.forEach((remainder) => {
+      squares.forEach;
+    });
+  }
 };
 
 numSquares(7168);
