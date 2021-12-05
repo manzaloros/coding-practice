@@ -43,6 +43,47 @@ update arr of matches with correct set
  */
 
 // time and space: O(list.length * 32)
+// Adam code:
+
+const input = fs.readFileSync(`${__dirname}/inputs/03.input`, 'utf8').trim().split('\n')
+  .map((word) => Number.parseInt(word, 2));
+
+const WORD_LENGTH = 12;
+const COUNT_THRESHOLD = input.length / 2;
+
+const bitCounts = new Array(WORD_LENGTH).fill(0);
+
+/*
+  For each word, for each bit position out of 12, if the word has a 1 at the
+  particular position, increment the bitCounts array at that position. word >>
+  position allows you to compare the least significant bit and 1. If comparing
+  the num and 1 gives you a 1, you know that the num at that position was also a
+  1.
+*/
+for (const word of input) {
+  for (let position = 0; position < WORD_LENGTH; position++) {
+    if (word >> position & 1) {
+      bitCounts[position]++;
+    }
+  }
+}
+
+let gamma = 0;
+let epsilon = 0;
+
+/*
+  Bitcounts is an array that represents a binary num. It's a bitmask?
+*/
+for (let position = 0; position < WORD_LENGTH; position++) {
+  if (bitCounts[position] > COUNT_THRESHOLD) {
+    gamma += 1 << position;
+  } else {
+    epsilon += 1 << position;
+  }
+}
+
+//
+
 const findLifeSupportRating = (list) => {
   list = list.split(/\n/);
 
