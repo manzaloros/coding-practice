@@ -27,7 +27,7 @@ const getTotalLanternfish = (input, numDays = 80) => {
   return input.length;
 };
 
-// Time: O(days)
+// Time: O(9 * days + input.length)
 // Space: O(9)
 const getTotalLanternfishBetter = (input, numDays) => {
   input = input.split(',')
