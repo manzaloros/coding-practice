@@ -26,3 +26,14 @@ const isValidBST = (root, min = -Infinity, max = Infinity) => {
 
   return isValidBST(root.left, min, root.val) && isValidBST(root.right, root.val, max);
 };
+
+// TS
+function isValidBST(root: TreeNode | null, minVal = -Infinity, maxVal = Infinity): boolean {
+  if (!root) return true;
+  if (root.val <= minVal || root.val >= maxVal) return false;
+        
+  const isLeftValid = isValidBST(root.left, minVal, root.val);
+  const isRightValid = isValidBST(root.right, root.val, maxVal);
+    
+  return isLeftValid && isRightValid;    
+};
