@@ -24,7 +24,7 @@
  maxLen: 6
  result: 19
  */
-export const maxSumTwoNoOverlap2 = function(nums, firstLen, secondLen) {
+export const maxSumTwoNoOverlap2 = (nums, firstLen, secondLen) => {
     // make prefix sums
     const prefix = [0];
     // for each num of nums
@@ -93,8 +93,8 @@ const findMax = (prefixes, firstLen, secondLen) => {
                     
  [2,1,5,6,0,9,5,0,3,8] 4,3
  */
-var maxSumTwoNoOverlap1 = function(nums, firstLen, secondLen) {
-    let prefixSum = new Array(nums.length + 1).fill(0);
+const maxSumTwoNoOverlap1 = (nums, firstLen, secondLen) => {
+    const prefixSum = new Array(nums.length + 1).fill(0);
     // make prefix sums. O(n) pre-process:     
     for (let i = 0; i < nums.length; i += 1) {
         prefixSum[i + 1] = prefixSum[i] + nums[i]; // [0,2,3,8,14,14,23,28,28,31,39]
