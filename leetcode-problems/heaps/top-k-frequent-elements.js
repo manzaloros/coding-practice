@@ -1,6 +1,6 @@
 const { MinPriorityQueue } = require('@datastructures-js/priority-queue');
 
-let topKFrequent = function (nums, k) {
+const topKFrequent = (nums, k) => {
   const minPQ = new MinPriorityQueue();
   const freq = new Map();
 

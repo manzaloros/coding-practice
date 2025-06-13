@@ -9,33 +9,40 @@
  * @param {ListNode[]} lists
  * @return {ListNode}
  */
-const { MinPriorityQueue } = require('@datastructures-js/priority-queue');
-const ListNode = require('../LinkedList');
+import { MinPriorityQueue } from '@datastructures-js/priority-queue';
+import ListNode from '../LinkedList.js';
 
 // O total number of of nodes * log k
-let mergeKLists = function (lists) {
-  const minPQ = new MinPriorityQueue();
+export const mergeKLists = (lists) => {
+  const minPQ = new MinPriorityQueue(node => node.val);
 
   // Add all lists to pq if not null
-  lists.forEach((node) => {
-    if (node) minPQ.enqueue(node, node.val);
-  });
+  // note, it only adds the first node from each list.
+  // We'll iterate through each list in the later loop.
+  for (const node of lists) {
+    if (node) {
+      minPQ.enqueue(node);
+    }
+  }
 
-  let sentinel = new ListNode();
+  // sentinel node is a dummy node that goes at the front of the list
+  const sentinel = new ListNode();
   // pointer tracks current node of list we're building
   let pointer = sentinel;
 
   while (minPQ.size() > 0) {
     // every value you dequeue will be in ascending order
-    let { priority: val, element: node } = minPQ.dequeue();
-    pointer.next = new ListNode(val);
-    // pointer.next = element;
-    // track the sorted list you are building
+    const node = minPQ.dequeue();
+    pointer.next = node
+
+    // track the sorted list you are building (move the pointer forward)
     pointer = pointer.next;
-    // iterate through dequeued list
-    node = node.next;
-    if (node) minPQ.enqueue(node, node.val);
+
+    if (node.next) {
+      minPQ.enqueue(node.next);
+    }
   }
 
   return sentinel.next;
 };
+
