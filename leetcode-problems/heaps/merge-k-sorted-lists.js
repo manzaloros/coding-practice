@@ -20,6 +20,7 @@ export const mergeKLists = (lists) => {
   // note, it only adds the first node from each list.
   // We'll iterate through each list in the later loop.
   for (const node of lists) {
+    // make sure the list isn't null!
     if (node) {
       minPQ.enqueue(node);
     }
@@ -35,7 +36,9 @@ export const mergeKLists = (lists) => {
     const node = minPQ.dequeue();
     pointer.next = node
 
-    // track the sorted list you are building (move the pointer forward)
+    // track the sorted list you are building (move the pointer forward).
+    // This is critical, because if you don't reassign pointer, you'll lose
+    // the references each time you dequeue a new node.
     pointer = pointer.next;
 
     if (node.next) {

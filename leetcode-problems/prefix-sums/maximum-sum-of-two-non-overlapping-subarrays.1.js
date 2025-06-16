@@ -55,6 +55,13 @@ const findMax = (sums, fL, sL) => {
      const currFirstArrSum = sumIncFirstArr - sumExcFirstArr;
      maxFirstArrSum = Math.max(maxFirstArrSum, currFirstArrSum);
 
+     // Finds the current second array sum
+     // This is possible because we found the current first array sum
+     // and we have the total sum (which includes that first array sum)
+
+     // Then we add the current second array sum to max first array sum we've seen
+     // This works as non-overlapping because we always calculate the initial first
+     // array sum using the sL and fL lengths
      const currTotalSum = sums[i];
      const currSecArrSum = currTotalSum - sumIncFirstArr;
      const possibleCombination = currSecArrSum + maxFirstArrSum;

@@ -50,6 +50,9 @@ const isZeroArray = (nums, queries) => {
    * prefix sum of delta array.
    * 
    * since delta array has -1 every time an interval ends, this works.
+   * 
+   * Also, instead of making a new operationCounts arr, we could just reuse the 
+   * deltaArr since we aren't using it for anything any more.
    */
   const operationCounts = [];
   let currentOperations = 0;
@@ -57,7 +60,6 @@ const isZeroArray = (nums, queries) => {
     currentOperations += delta;
     operationCounts.push(currentOperations)
   }
-
   for (let i = 0; i < nums.length; i += 1) {
     // if operation counts[i] is ever less than nums[i], 
     // it means that nums[i] didn't have enough decrements done to it

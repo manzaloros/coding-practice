@@ -1,4 +1,3 @@
-import {mergeKLists} from './leetcode-problems/heaps/merge-k-sorted-lists.js';
-import LinkedList from './leetcode-problems/LinkedList.js'
+import { search } from './leetcode-problems/binary-search/binary-search.js';
 
-mergeKLists([LinkedList.arrayToList([1,4,5]), LinkedList.arrayToList([1,3,4]), LinkedList.arrayToList([2,6])])
+search([10,1,2,7,1,3].sort((a,b) => a-b), 2)

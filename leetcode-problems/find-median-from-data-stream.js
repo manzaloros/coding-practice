@@ -58,6 +58,10 @@ class MedianFinder {
   findMedian() {
     const { lo, hi } = this;
 
+    // make sure not to dequeue elements, here, since we want to support adding
+    // more elements after calling this method.
+    // Also, if the lo size is greater, it will only be greater by 1, so we can just return
+    // that element, otherwise the average of the two roots.
     return lo.size() > hi.size() ? lo.front() : (hi.front() + lo.front()) / 2;
   }
 }

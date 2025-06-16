@@ -2,8 +2,8 @@ const { MinPriorityQueue, MaxPriorityQueue } = require('@datastructures-js/prior
 
 class MedianFinder {
   constructor() {
-    this.lo = new MaxPriorityQueue();
-    this.hi = new MinPriorityQueue();
+    this.lo = new MaxPriorityQueue(); // front is always biggest
+    this.hi = new MinPriorityQueue(); // front is always smallest
   }
 
   addNum(num) {
