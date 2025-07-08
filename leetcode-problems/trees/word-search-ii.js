@@ -3,7 +3,7 @@
  * @param {string[]} words
  * @return {string[]}
  */
-let findWords = function (board, words) {
+const findWords = (board, words) => {
   const [rows, cols] = [board.length, board[0].length];
 
   const trie = new Map();
@@ -15,6 +15,7 @@ let findWords = function (board, words) {
       curr = curr.get(char);
     });
 
+    // mark that this is the end of the word
     curr.set('word', word);
   });
 
@@ -28,6 +29,7 @@ let findWords = function (board, words) {
     if (nCol >= cols) return false;
     if (nRow < 0) return false;
     if (nCol < 0) return false;
+    // if already visited, don't return as a neighbor:
     if (visited.has(`${nRow}:${nCol}`)) return false;
 
     return true;
@@ -35,16 +37,17 @@ let findWords = function (board, words) {
 
   const list = new Set();
 
-  const search = (node, row, col, visited) => {
+  // DFS. BFS CAN be done recursively, it's rare and inefficient.
+  const dfs = (node /* Map */, row, col, visited /* Set */) => {
     const key = `${row}:${col}`;
     visited.add(key);
 
     if (node.has('word')) list.add(node.get('word'));
 
     getNeighbors(row, col, visited).forEach(([nRow, nCol]) => {
-      const char = board[nRow][nCol];
+      const neighborChar = board[nRow][nCol];
 
-      if (node.has(char)) search(node.get(char), nRow, nCol, visited);
+      if (node.has(neighborChar)) dfs(node.get(neighborChar), nRow, nCol, visited);
     });
 
     visited.delete(key);
@@ -53,7 +56,7 @@ let findWords = function (board, words) {
   board.forEach((row, rowIndex) => {
     row.forEach((col, colIndex) => {
       const char = board[rowIndex][colIndex];
-      if (trie.has(char)) search(trie.get(char), rowIndex, colIndex, new Set());
+      if (trie.has(char)) dfs(trie.get(char), rowIndex, colIndex, new Set());
     });
   });
 

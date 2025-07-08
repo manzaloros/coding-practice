@@ -25,3 +25,20 @@ const maximumDifference = (nums) => {
 
     return result;
 };
+
+// another attempt:
+const maximumDifferenceAgain = (nums) => {
+    let maxDiff = -1;
+    let min = nums[0];
+
+    for (let i = 0; i < nums.length - 1; i += 1) {
+        min = Math.min(min, nums[i]);
+
+        if (nums[i + 1] > min) {
+            maxDiff = Math.max(nums[i + 1] - min, maxDiff)
+        }
+        
+    }
+
+    return maxDiff;
+};

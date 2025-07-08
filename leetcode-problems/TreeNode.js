@@ -1,8 +1,21 @@
-module.exports = class TreeNode {
+export class TreeNode {
   constructor(val, left, right) {
     this.val = (val === undefined ? 0 : val);
     this.left = (left === undefined ? null : left);
     this.right = (right === undefined ? null : right);
+  }
+
+  findNode(val, node = this) {
+    if (node?.val === val) return node;
+    let found;
+    if (node.left) {
+      found = this.findNode(val, node.left)
+      if (found) return found;
+    }
+    if (node.right) {
+      found = this.findNode(val, node.right)
+      if (found) return found;
+    }
   }
 
   addLeftChild(val) {
@@ -19,7 +32,7 @@ module.exports = class TreeNode {
 
   static createFromArray(vals, root = new TreeNode(vals[0]), i = 0) {
     if (i < vals.length) {
-      let temp = new TreeNode(vals[i]);
+      const temp = new TreeNode(vals[i]);
       root = temp;
 
       root.left = TreeNode.createFromArray(vals, root.left, 2 * i + 1);

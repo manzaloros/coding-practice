@@ -3,7 +3,7 @@
 /**
  * Initialize your data structure here.
  */
-let WordDictionary = function () {
+const WordDictionary = function () {
   this.trie = new Map();
 };
 
@@ -34,7 +34,7 @@ const searchInNode = (word, trie) => {
 
     if (!trie.has(char)) {
       if (char === '.') {
-        for (let [letter, childTrie] of trie.entries()) {
+        for (const [letter, childTrie] of trie.entries()) {
           if (searchInNode(word.substring(i + 1), childTrie)) return true;
         }
       }

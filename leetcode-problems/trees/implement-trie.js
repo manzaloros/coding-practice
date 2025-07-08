@@ -61,7 +61,7 @@ class Trie {
 
   search(word) {
     const node = this.traverse(word);
-    return node && node?.endOfWord;
+    return node?.endOfWord;
   }
 
   startsWith(prefix) {

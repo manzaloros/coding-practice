@@ -15,7 +15,7 @@
  */
 
  // O(1) time and space
-var triangleType = function(nums) {
+const triangleType = (nums) => {
     const iso = "isosceles";
     const sca = "scalene"
     const equi = "equilateral"
@@ -24,6 +24,7 @@ var triangleType = function(nums) {
     const [one, two, three] = nums;
     
 
+    // NOTE! If you sort the array, you can just check that one + two is > three:
     // determine if its a triangle
      if ((one + two) > three && (two + three) > one && (one + three) > two) {
         if (one === two && two === three) return equi;
@@ -31,5 +32,7 @@ var triangleType = function(nums) {
         if (one === two || two === three || one === three) return iso;
 
         return sca;   
-     } else return "none";
+     }
+     
+     return "none";
 }
