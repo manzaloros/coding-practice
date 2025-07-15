@@ -11,26 +11,34 @@
  * @param {number[]} inorder
  * @return {TreeNode}
  */
-let buildTree = function (preorder, inorder) {
-  let preorderIndex = 0;
-  let map = new Map();
+const buildTree = (preorder, inorder) => {
+	let preorderIndex = 0;
+	const map = new Map();
 
-  inorder.forEach((element, index) => {
-    map.set(element, index);
-  });
+	inorder.forEach((element, index) => {
+		map.set(element, index);
+	});
 
-  const arrayToTree = (left, right) => {
-    if (left > right) return null;
+  /**
+   * Left is the leftmost inorder index of the current tree Right is the
+ *   rightmost inorder index of the current tree
+   * 
+   * So if left is 2 and right is 4, that means the current tree must be more
+ *   than in indexes 2,3, and 4 of the inorder array.
+   * 
+  */
+	const arrayToTree = (leftmostInorderIdx, rightmostInorderIdx) => {
+		if (leftmostInorderIdx > rightmostInorderIdx) return null;
 
-    let rootVal = preorder[preorderIndex];
-    preorderIndex += 1;
+		const rootVal = preorder[preorderIndex];
+		preorderIndex += 1;
 
-    const root = new TreeNode(rootVal);
-    root.left = arrayToTree(left, map.get(rootVal) - 1);
-    root.right = arrayToTree(map.get(rootVal) + 1, right);
+		const root = new TreeNode(rootVal);
+		root.left = arrayToTree(leftmostInorderIdx, map.get(rootVal) - 1);
+		root.right = arrayToTree(map.get(rootVal) + 1, rightmostInorderIdx);
 
-    return root;
-  };
+		return root;
+	};
 
-  return arrayToTree(0, preorder.length - 1);
+	return arrayToTree(0, preorder.length - 1);
 };

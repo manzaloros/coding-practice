@@ -19,7 +19,7 @@ BinaryTree.prototype.addChild = function (val) {
   }
 }
 
-constructTreeFromArray = function (arr) {
+constructTreeFromArray = (arr) => {
   const root = new BinaryTree(arr[0]);
   let previousNode = root;
   for (let i = 1; i < arr.length; i += 1) {

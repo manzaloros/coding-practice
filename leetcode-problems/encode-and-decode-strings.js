@@ -3,10 +3,9 @@
  *
  * @param {string[]} strs
  * @return {string}
+ * This method isn't as good as the one below because it doesn't account for if ā is a delimiter in the original strings
  */
-let encode = function (strs) {
-  return strs.map((string) => `${string}ā`).join('');
-};
+const encode = (strs) => strs.map((string) => `${string}ā`).join('');
 
 /**
 * Decodes a single string to a list of strings.
@@ -14,7 +13,7 @@ let encode = function (strs) {
 * @param {string} s
 * @return {string[]}
 */
-let decode = function (s) {
+const decode = (s) => {
   const arr = s.split('ā');
   return arr.slice(0, arr.length - 1);
 };
@@ -33,6 +32,7 @@ const encodeChunk = (strings) => (
 
   // append that length to the string
   // output for each string
+  // looks like '0003foo0003bar' for ['foo', 'bar']
 );
 
 const decodeChunks = (string) => {
@@ -43,7 +43,7 @@ const decodeChunks = (string) => {
     // Get length of upcoming string and increment i to beginning of that
     // string. This will always be 4 because we padded it earlier. Make sure to
     // convert it to a string
-    let length = +(string.substring(i, i + 4));
+    const length = Number.parseInt((string.substring(i, i + 4)), 10); // substring is better supported than 'substr'
     i += 4;
 
     // Push to the output the string, which you know the length because you just
