@@ -10,7 +10,7 @@
  * @param {ListNode} l2
  * @return {ListNode}
  */
-let mergeTwoLists = function (l1, l2) {
+const mergeTwoLists = (l1, l2) => {
   const sentinel = new ListNode();
   let curr = sentinel;
   let [p1, p2] = [l1, l2];

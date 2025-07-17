@@ -3,9 +3,15 @@
  * @return {void} Do not return anything, modify matrix in-place instead.
  */
 // O(rows * cols)
-let rotate = function (matrix) {
+const rotate = (matrix) => {
   // Reverse matrix rows
-  matrix = matrix.reverse();
+  matrix.reverse();
+
+  // Can also swap the rows so its done in place. EDIT: just kidding. '.reverse()' is in place, already.:
+  // matrix.forEach((row, index) => {
+  //   const swapIndex = matrix.length - index - 1;
+  //   if (index < swapIndex) [matrix[index], matrix[swapIndex]] = [matrix[swapIndex], matrix[index]]
+  // })
 
   const swap = (i, j) => {
     [matrix[i][j], matrix[j][i]] = [matrix[j][i], matrix[i][j]];

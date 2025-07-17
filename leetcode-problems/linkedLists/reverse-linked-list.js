@@ -17,17 +17,31 @@ The number of nodes in the list is the range [0, 5000].  -5000 <= Node.val <=
 Follow up: A linked list can be reversed either iteratively or recursively.
 Could you implement both? */
 
-const reverseList = (head) => {
-  if (!head || !head.next) return head;
+const reverseListRecursive = (head) => {
+	if (!head || !head.next) return head;
 
-  // Previous is always the last node!
-  const previous = reverseList(head.next);
+	// Previous is always the last node!
+	const previous = reverseList(head.next);
 
-  head.next.next = head;
-  // Nodes always get their next set to null until it is reassigned in the next
-  // recursive call (or not if it's the new tail node)
-  head.next = null;
+	head.next.next = head;
+	// Nodes always get their next set to null until it is reassigned in the next
+	// recursive call (or not if it's the new tail node)
+	head.next = null;
 
-  // Previous is always the very last node (which becomes the new first node!)
-  return previous;
+	// Previous is always the very last node (which becomes the new first node!)
+	return previous;
+};
+
+const reverseListIterative = (head) => {
+	let prev = null;
+	let curr = head;
+
+	while (curr) {
+		const { next } = curr;
+		curr.next = prev;
+		prev = curr;
+		curr = next;
+	}
+
+	return prev;
 };

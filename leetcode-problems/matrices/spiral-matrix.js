@@ -2,7 +2,7 @@
  * @param {number[][]} matrix
  * @return {number[]}
  */
-let spiralOrderMine = function (matrix) {
+const spiralOrderMine = (matrix) => {
   let mBeg = 0;
   let mEnd = matrix[0].length - 1;
 
@@ -60,7 +60,7 @@ const spiralOrder = (matrix) => {
 
   if (!matrix === matrix.length === 0) return result;
 
-  let [rows, cols] = [matrix.length, matrix[0].length];
+  const [rows, cols] = [matrix.length, matrix[0].length];
 
   let [up, down] = [0, rows - 1];
   let [left, right] = [0, cols - 1];

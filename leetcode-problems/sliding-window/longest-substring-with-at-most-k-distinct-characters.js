@@ -3,7 +3,7 @@
  * @param {number} k
  * @return {number}
  */
-let lengthOfLongestSubstringKDistinct = function (s, k) {
+const lengthOfLongestSubstringKDistinct = (s, k) => {
   if (k === 0) return 0;
 
   const map = new Map();

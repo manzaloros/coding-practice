@@ -1,3 +1,3 @@
-import { characterReplacement } from "./leetcode-problems/sliding-window/longest-repeating-character-replacement2.js";
+import { spiralOrder } from "./leetcode-problems/matrices/spiral-matrix.1.js";
 
-characterReplacement("AABABBA", 1)
+spiralOrder([[1,2,3],[4,5,6],[7,8,9]])
