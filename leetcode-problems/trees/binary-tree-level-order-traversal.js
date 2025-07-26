@@ -3,16 +3,16 @@ const levelOrderOneQueue = (root) => {
 	const queue = [root];
 	while (queue.length > 0) {
 		const level = []; // will be pushed to result
-    /**
-     * Keep track of the size so that you don't need two queues
-     */
-		const sizeOfCurrentLevel = queue.length; 
+		/**
+		 * Keep track of the size so that you don't need two queues
+		 */
+		const sizeOfCurrentLevel = queue.length;
 		for (let i = 0; i < sizeOfCurrentLevel; i += 1) {
-			const dequeued = queue.shift();
+			const { val, left, right } = queue.shift();
 			if (dequeued) {
-				level.push(dequeued.val);
-				queue.push(dequeued.left);
-				queue.push(dequeued.right);
+				level.push(val);
+				queue.push(left);
+				queue.push(right);
 			}
 		}
 		if (level.length > 0) result.push(level);

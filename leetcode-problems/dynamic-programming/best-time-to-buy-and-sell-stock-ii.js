@@ -1,13 +1,13 @@
 /*
   no memo:
-    time: O(2 ^ length)
+    time: O(2 ^ length) (exponential)
     space: O(length)
 
   memo:
     time: O(length)
     space: O(length)
 */
-let maxProfit = function (prices) {
+const maxProfit = (prices) => {
   const memo = new Map();
 
   const backtrack = (index, canBuy) => {

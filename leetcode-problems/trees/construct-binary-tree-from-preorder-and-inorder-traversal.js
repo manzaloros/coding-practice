@@ -27,6 +27,22 @@ const buildTree = (preorder, inorder) => {
  *   than in indexes 2,3, and 4 of the inorder array.
    * 
   */
+ /**
+      Left max and right max keep track of the bounds of the tree. Inorder
+      always tells you the leftmost node and the rightmost node of the tree (the 
+      first index and the last index in the arr).
+
+     inorder:
+        c
+      9,3,15,20,7
+      L
+           R-----
+
+      (L is the left subtree, R is the right subtree)
+      So if your curr value is 3, the left subtree max left index is 0 and the right max is also 0
+
+      But the right sub tree left max is 2, and the right max is 4.
+     */
 	const arrayToTree = (leftmostInorderIdx, rightmostInorderIdx) => {
 		if (leftmostInorderIdx > rightmostInorderIdx) return null;
 

@@ -34,11 +34,11 @@ const calculate = (s, { length } = s) => {
     const currentChar = s[i];
 
     // if character is a number
-    if (!isNaN(currentChar) && currentChar !== ' ') {
+    if (!Number.isNaN(currentChar) && currentChar !== ' ') {
       currentNum = (currentNum * 10) + +currentChar;
     }
     // if char is an operation OR it's a number and the last character
-    if ((!!isNaN(currentChar) && currentChar !== ' ') || i === length - 1) {
+    if ((!!Number.isNaN(currentChar) && currentChar !== ' ') || i === length - 1) {
       if (operation === '+' || operation === '-') {
         result += lastNum;
         lastNum = (operation === '+') ? currentNum : -currentNum;

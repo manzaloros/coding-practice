@@ -12,44 +12,44 @@ Constraints:
 3 <= nums.length <= 10^3 -10^3 <= nums[i] <= 10^3 -10^4 <= target <= 10^4 */
 
 const threeSumClosest = (nums, target) => {
-  nums.sort((a, b) => (a < b ? -1 : 1));
+	nums.sort((a, b) => (a < b ? -1 : 1));
 
-  // initialize answer array initialize current sum only update closest sum and
-  // array if new sum is closer to target do abs(target - newSum). Pick the
-  // smaller number because that is closer to target
+	// initialize answer array initialize current sum only update closest sum and
+	// array if new sum is closer to target do abs(target - newSum). Pick the
+	// smaller number because that is closer to target
 
-  // iterate
-  // iterate for each num. j = i + 1, k = length - 1
-  // initialize currSum
-  // update answer array and closestSum
-  // if currSum > target, move k down
-  // if currSum < target, move j update
-  // if currSum === target, return [i, j, k]
+	// iterate
+	// iterate for each num. j = i + 1, k = length - 1
+	// initialize currSum
+	// update answer array and closestSum
+	// if currSum > target, move k down
+	// if currSum < target, move j update
+	// if currSum === target, return [i, j, k]
 
-  // return answer array
+	// return answer array
 
-  let differenceFromClosestSum = Infinity;
-  let closestSum = Infinity;
+	let differenceFromClosestSum = Number.POSITIVE_INFINITY;
+	let closestSum = Number.POSITIVE_INFINITY;
 
-  for (let i = 0; i < nums.length; i += 1) {
-    let j = i + 1;
-    let k = nums.length - 1;
+	for (let i = 0; i < nums.length; i += 1) {
+		let j = i + 1;
+		let k = nums.length - 1;
 
-    while (j < k) {
-      let currSum = nums[i] + nums[j] + nums[k];
+		while (j < k) {
+			const currSum = nums[i] + nums[j] + nums[k];
 
-      if (Math.abs(target - currSum) < differenceFromClosestSum) {
-        closestSum = currSum;
-        differenceFromClosestSum = Math.abs(target - closestSum);
-      }
+			if (Math.abs(target - currSum) < differenceFromClosestSum) {
+				closestSum = currSum;
+				differenceFromClosestSum = Math.abs(target - closestSum);
+			}
 
-      if (currSum > target) k -= 1;
-      if (currSum < target) j += 1;
-      if (currSum === target) return currSum;
-    }
-  }
+			if (currSum > target) k -= 1;
+			if (currSum < target) j += 1;
+			if (currSum === target) return currSum;
+		}
+	}
 
-  return closestSum;
+	return closestSum;
 };
 
 // threeSumClosest([-1, 2, 1, -4], 1); // 2
