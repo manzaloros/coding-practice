@@ -76,3 +76,4 @@ console.log({ reduced }, reduced === 21);
 
 console.log(await promiseAll([])); // []
 console.log(flatMap([], (v) => v.value)); // []
+console.log(flatMap(undefined, (v) => v.value)); // []
