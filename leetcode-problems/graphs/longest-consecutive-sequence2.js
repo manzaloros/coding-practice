@@ -1,6 +1,8 @@
 /*
   Time: O(length). Without path compression and rank: O(length * length)
   Space: O(length)
+
+  Union find?
 */
 const longestConsecutive = (nums) => {
   const valToIndex = new Map();

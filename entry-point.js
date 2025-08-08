@@ -1,23 +1,15 @@
-const subsets = (nums) => {
-  const result = [];
-  const temp = [];
+var isPalindrome = (s) => {
+	const isAlphaNumeric = (char) =>
+		(char >= "a" && char <= "z") || (char >= "0" && char <= "9");
+	const inBounds = (i, j) => i <= j;
 
-  const backtrack = (i) => {
-    // basically just make a copy of temp so we have a unique array for this
-    // subset
-    result.push([...temp]);
+	for (let i = 0, j = s.length - 1; inBounds(i, j); i += 1, j -= 1) {
+		while (!isAlphaNumeric(s[j]) && inBounds(i, j - 1)) j -= 1;
+		while (!isAlphaNumeric(s[i]) && inBounds(i + 1, j)) i += 1;
 
-    for (let j = i; j < nums.length; j += 1) {
-      temp.push(nums[j]);
-      backtrack(j + 1);
-      // pop off temp because we have pushed that possibility to result
-      temp.pop();
-    }
-  };
-
-  backtrack(0);
-
-  return result;
+		if (s[i].toLowerCase() !== s[j].toLowerCase()) return false;
+	}
+	return true;
 };
 
-subsets([1,2,3])
+isPalindrome("A man, a plan, a canal: Panama");

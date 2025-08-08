@@ -83,7 +83,24 @@ const combinationSum4Permutation = (nums, target) => {
   return result;
 };
 
-// This is the optimal solution!
+// This is the optimal solution! O(nums.length) with the memo
+/**
+ * 
+ * Visualize:
+ *  
+ * 1,2,3
+ memo: {1-> 1, 2 -> 2, }
+ f(4 'target') = 4
+  |--> f(3) = 4
+        |--> f(2) = 2
+              |--> f(1) = 1
+                    |--> f(0) = 1
+              |--> f(0) = 1
+        |--> f(1) = 1
+        |--> f(0) = 1
+  |--> f(2) = 2
+  |--> f(1) = 1
+ */
 const combinationSum4TopDownDP = (nums, target, memo = new Map()) => {
   if (target === 0) return 1;
 

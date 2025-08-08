@@ -38,8 +38,10 @@ const findMin = (nums) => {
     const mid = left + Math.floor((right - left) / 2);
 
     if (nums[mid] > nums[right]) {
+      // go right, minimum must be there
       left = mid + 1;
     } else if (nums[mid] < nums[right]) {
+       // we know there are no smaller numbers to the right of mid
       right = mid;
     } else if (nums[mid] === nums[right]) {
       right -= 1;

@@ -53,8 +53,18 @@ const productExceptSelf = (nums,
 };
 
 /*
-  TC: O(n)
-  SC: O(n)
+  TC: O(n) SC: O(n)
+
+  The secret here is that you make a prefix multiple array of everything to the
+  left of the current element, then another prefix multiple of everything right
+  of the current element.
+
+  So when you iterate the left and right arrays, you can multiply them to get
+  the product except self for the current element
+
+  left: [1,1,2,6] --->  [everything to the left of current]
+  right:[24,12,4,1] --> [everything to the right of current]
+  product:[24, 12,8,6]
 */
 const productExceptSelfPrefix = (nums, { length } = nums) => {
   const products = Array(length);
@@ -66,6 +76,7 @@ const productExceptSelfPrefix = (nums, { length } = nums) => {
     left[i] = left[i - 1] * nums[i - 1];
   }
 
+  // start at second to last element
   for (let i = length - 2; i >= 0; i -= 1) {
     right[i] = right[i + 1] * nums[i + 1];
   }
@@ -79,8 +90,13 @@ const productExceptSelfPrefix = (nums, { length } = nums) => {
 
 /* O(1) space
 Still using prefix sums
-*/
 
+Key here is that the products array doesn't include the last product. So,
+
+1,2,3,4 -> 
+products: 1,1,2,6 (so there is no 24)
+
+ */
 const productExceptSelfO1Space = (nums, { length } = nums, products = [1], right = 1) => {
   // Products first represents left
   for (let i = 1; i < length; i += 1) {
