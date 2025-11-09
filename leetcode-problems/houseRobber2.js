@@ -27,7 +27,48 @@ Constraints:
 0 <= nums[i] <= 1000
 
 */
+var robWithTraditionalDpArray = (nums) => {
+	const { length } = nums;
+	if (nums.length === 1) return nums[0];
+	const check = (arr) => {
+		const dp = Array(arr.length).fill(0);
 
+		// Base cases
+		dp[0] = arr[0];
+		dp[1] = Math.max(arr[0], arr[1]);
+		for (let i = 2; i < arr.length; i += 1) {
+			// DP at i is the max money you can make from robbing the current
+			// house (and not robbing the house before it) or robbing the house
+			// before it:
+			dp[i] = Math.max(dp[i - 1], dp[i - 2] + arr[i]);
+		}
+		return dp[arr.length - 1];
+	};
+
+	return Math.max(check(nums.slice(0, length - 1)), check(nums.slice(1)));
+};
+
+// O(n) time
+const robSimpler = (nums) => {
+	const n = nums.length;
+	if (n === 1) return nums[0];
+
+	const robLinear = (arr) => {
+		let prev1 = 0,
+			prev2 = 0; // prev1 = dp[i-1], prev2 = dp[i-2]
+		for (const num of arr) {
+			const temp = prev1;
+			prev1 = Math.max(prev1, prev2 + num);
+			prev2 = temp;
+		}
+		return prev1;
+	};
+
+	return Math.max(
+		robLinear(nums.slice(0, n - 1)), // exclude last
+		robLinear(nums.slice(1)), // exclude first
+	);
+};
 
 /* *
   Since its circular we want to avoid adding an element at the first place
@@ -37,31 +78,31 @@ Constraints:
   2. From index 1 to nums.length - 1
 */
 const rob = (nums) => {
-  const length = nums.length;
-  if (length === 1) return nums[0];
+	const length = nums.length;
+	if (length === 1) return nums[0];
 
-  const nums1 = nums.slice();
-  return Math.max(max(nums, 0, length - 1), max(nums1, 1, length));
-}
+	const nums1 = nums.slice();
+	return Math.max(max(nums, 0, length - 1), max(nums1, 1, length));
+};
 
 const max = (nums, start, length) => {
-  let maximum = 0;
+	let maximum = 0;
 
-  for (let i = start; i < length; i += 1) {
-    if ((i - 2) < start) {
-      maximum = Math.max(maximum, nums[i]);
-    } else {
-      maximum = Math.max(maximum, nums[i] + nums[i - 2]); // Avoiding adjacent house
-    }
-    nums[i] = maximum; // Adding max entry to same array for further consideration
-  }
+	for (let i = start; i < length; i += 1) {
+		if (i - 2 < start) {
+			maximum = Math.max(maximum, nums[i]);
+		} else {
+			maximum = Math.max(maximum, nums[i] + nums[i - 2]); // Avoiding adjacent house
+		}
+		nums[i] = maximum; // Adding max entry to same array for further consideration
+	}
 
-  return maximum; // Return max element at end
-}
+	return maximum; // Return max element at end
+};
 
 // Tests:
 // rob([0]) // 2
 // rob([2, 3, 2]) //3
-rob([1, 2, 3, 1]) //4
+rob([1, 2, 3, 1]); //4
 // rob([1]) //1
 // rob([1, 3, 1, 100]);

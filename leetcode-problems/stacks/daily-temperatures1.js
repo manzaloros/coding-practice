@@ -4,7 +4,16 @@
  */
 const dailyTemperatures = (temps) => {
 	const result = Array(temps.length).fill(0);
+	/**
+	 * Stack holds indices that map to temps.
+	 *
+	 * Stack will be monotonically decreasing, meaning each temp we add will be
+	 * less than the top of the stack, otherwise we'll pop from the stack.
+	 */
 	const stack = [];
+	const getTop = () => {
+        return temps[stack[stack.length - 1]]
+    }
 
 	/*
     Stack will contain only tempratures greater than current
@@ -16,8 +25,8 @@ const dailyTemperatures = (temps) => {
 
     The stack will be full of descending temperatures.
   */
-	temps.forEach((currentTemp, currIndex) => {
-		while (stack.length > 0 && temps[stack[stack.length - 1]] < currentTemp) {
+	temps.forEach((currTemp, currIndex) => {
+		while (stack.length > 0 && currTemp > getTop()) {
 			const indexOfLastSmallestTemp = stack.pop();
 			result[indexOfLastSmallestTemp] = currIndex - indexOfLastSmallestTemp;
 		}

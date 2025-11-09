@@ -2,42 +2,42 @@
 //The big takeaway here was the isFutureWarmer function
 //which lets us know if we should add a zero to the array
 
-var dailyTemperatures = function(T) {
-  //create daysToWait array
-  let daysToWait = [];
-  //iterate over temps
-  for (let i = 0; i < T.length; i++) {
-    //if future is warmer
-    let days = 0;
-    if (isFutureWarmer(i, T)) {	
-      //iterate over future
-      for (let j = i + 1; j < T.length; j++) {
-      	//check if next day is warmer
-      	if (T[j] > T[i]) {
-      	  //add 1 to days
-      	  days++;
-      	  //add days to daysToWait
-      	  daysToWait.push(days);
-      	  //leave loop and go to next day
-      	  break;
-      	} else {
-      	//if the next day isnt warmer
-      	  //add 1 to days
-      	  days++;
-      	}
-      }
-    } else {
-    //if the future isnt warmer
-      //add zero to daysToWait
-      daysToWait.push(days);
-    }
-  }
-  //return daysToWait array
-  return daysToWait;      
+var dailyTemperatures = (T) => {
+	//create daysToWait array
+	const daysToWait = [];
+	//iterate over temps
+	for (let i = 0; i < T.length; i++) {
+		//if future is warmer
+		let days = 0;
+		if (isFutureWarmer(i, T)) {
+			//iterate over future
+			for (let j = i + 1; j < T.length; j++) {
+				//check if next day is warmer
+				if (T[j] > T[i]) {
+					//add 1 to days
+					days++;
+					//add days to daysToWait
+					daysToWait.push(days);
+					//leave loop and go to next day
+					break;
+				} else {
+					//if the next day isnt warmer
+					//add 1 to days
+					days++;
+				}
+			}
+		} else {
+			//if the future isnt warmer
+			//add zero to daysToWait
+			daysToWait.push(days);
+		}
+	}
+	//return daysToWait array
+	return daysToWait;
 };
 
 function isFutureWarmer(startingIndex, temps) {
-	for (let i = startingIndex; i < temps.length; i++){
+	for (let i = startingIndex; i < temps.length; i++) {
 		//check if the temperature is ever higher for rest of array
 		if (temps[i] > temps[startingIndex]) {
 			return true;
@@ -48,7 +48,7 @@ function isFutureWarmer(startingIndex, temps) {
 }
 
 function assertArraysEqual(actual, expected) {
-	let sameLength = actual.length === expected.length;
+	const sameLength = actual.length === expected.length;
 	let sameValues = true;
 	for (let i = 0; i < actual.length; i++) {
 		if (actual[i] !== expected[i]) {
@@ -63,6 +63,6 @@ function assertArraysEqual(actual, expected) {
 	}
 }
 
-let inputActual = dailyTemperatures([34,80,80,34,34,80,80,80,80,34]);
-let inputExpected = [1,0,0,2,1,0,0,0,0,0];
+const inputActual = dailyTemperatures([34, 80, 80, 34, 34, 80, 80, 80, 80, 34]);
+const inputExpected = [1, 0, 0, 2, 1, 0, 0, 0, 0, 0];
 assertArraysEqual(inputActual, inputExpected);

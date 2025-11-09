@@ -41,83 +41,155 @@ m == heights.length n == heights[r].length 1 <= m, n <= 200 0 <= heights[r][c]
   Cells are only neighbors if they fit the condition.
 */
 
-const pacificAtlantic = (heights) => {
-  // init rows and cols
-  const rows = heights.length;
-  const cols = heights[0].length;
+const pacificAtlanticDFS = (heights) => {
+	const rows = heights.length;
+	const cols = heights[0].length;
 
-  // make atlantic and pacific queues
-  const atlanticQueue = [];
-  const pacificQueue = [];
+	const pacific = new Set();
+	const atlantic = new Set();
+	const makeKey = (row, col) => `${row}:${col}`;
 
-  // make adjacent coords array. [down, up, right, left]
-  const directions = [[0, 1], [0, -1], [1, 0], [-1, 0]];
+	const getNeighbors = (row, col) => {
+		return [
+			[0, 1],
+			[0, -1],
+			[1, 0],
+			[-1, 0],
+		]
+			.map(([nR, nC]) => [nR + row, nC + col])
+			.filter(([nR, nC]) => nR < rows && nR >= 0 && nC < cols && nC >= 0);
+	};
+	const dfs = (row, col, visited) => {
+		const key = makeKey(row, col);
+		visited.add(key);
 
-  const bfs = (queue) => {
-    // Make a matrix to track visited and reachable
-    // false means we haven't visited the cell OR it isn't reachable
-    const reachable = Array(rows).fill(false).map((row) => Array(cols).fill(false));
+		getNeighbors(row, col).forEach(([nR, nC]) => {
+			const canFlow = heights[nR][nC] >= heights[row][col];
+			if (!visited.has(makeKey(nR, nC)) && canFlow) dfs(nR, nC, visited);
+		});
+	};
 
-    while (queue.length > 0) {
-      const current = queue.shift();
+	/**
+      Start from each side of the matrix (the ocean) and track which cells can
+      flow into the ocean.
 
-      reachable[current[0]][current[1]] = true;
+      A neighbor is a cell that has a greater than or equal to value to the
+      current cell.
 
-      directions.forEach((direction) => {
-        const newRow = current[0] + direction[0]; // i.e. 0 + 0 or 0 + -1
-        const newCol = current[1] + direction[1];
+      Each time you visit a cell, add it to the set for that side of the ocean.
+     */
+	for (let c = 0; c < cols; c += 1) dfs(0, c, pacific); // first row
+	for (let r = 0; r < rows; r += 1) dfs(r, 0, pacific); // first col
 
-        // if the adjacent row is in bounds
-        if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols) {
-          // if we haven't seen the adjacent cell yet
-          if (!reachable[newRow][newCol]) {
-            // if the adjacent cell matches our criteria
-            if (heights[newRow][newCol] >= heights[current[0]][current[1]]) {
-              // add the adjacent cell to the queue so we can process it as
-              // visited AND as a cell that can flow water into the ocean
-              queue.push([newRow, newCol]);
-            }
-          }
-        }
-      });
-    }
+	for (let c = 0; c < cols; c += 1) dfs(rows - 1, c, atlantic); // last row
+	for (let r = 0; r < rows; r += 1) dfs(r, cols - 1, atlantic); // last col
 
-    return reachable;
-  };
+	/**
+	 * If both sets have the same cell, that means it can be visited by that ocean
+	 * side
+	 */
+	const result = [];
+	heights.forEach((row, rowIndex) => {
+		row.forEach((_cell, colIndex) => {
+			const key = makeKey(rowIndex, colIndex);
+			if (pacific.has(key) && atlantic.has(key))
+				result.push([rowIndex, colIndex]);
+		});
+	});
 
-  // get all cells that are adjacenst to each ocean
-  // Adds coords of adjacent cells NOT heights
-  // Start at the oceans, so we can search inward
-  for (let row = 0; row < rows; row += 1) {
-    // Add left side to pacific
-    pacificQueue.push([row, 0]);
-    // Add right side to atlantic
-    atlanticQueue.push([row, cols - 1]);
-  }
-
-  for (let col = 0; col < cols; col += 1) {
-    // add north side to pacific
-    pacificQueue.push([0, col]);
-    // add south side to atlantic
-    atlanticQueue.push([rows - 1, col]);
-  }
-
-  // bfs from each ocean
-  const pacificReachable = bfs(pacificQueue);
-  const atlanticReachable = bfs(atlanticQueue);
-
-  // find all cells that flow into both oceans
-  const commonCells = [];
-
-  for (let row = 0; row < rows; row += 1) {
-    for (let col = 0; col < cols; col += 1) {
-      if (pacificReachable[row][col] && atlanticReachable[row][col]) {
-        commonCells.push([row, col]);
-      }
-    }
-  }
-
-  return commonCells;
+	return result;
 };
 
-pacificAtlantic([[1, 2, 2, 3, 5], [3, 2, 3, 4, 4], [2, 4, 5, 3, 1], [6, 7, 1, 4, 5], [5, 1, 1, 2, 4]]);
+const pacificAtlantic = (heights) => {
+	// init rows and cols
+	const rows = heights.length;
+	const cols = heights[0].length;
+
+	// make atlantic and pacific queues
+	const atlanticQueue = [];
+	const pacificQueue = [];
+
+	// make adjacent coords array. [down, up, right, left]
+	const directions = [
+		[0, 1],
+		[0, -1],
+		[1, 0],
+		[-1, 0],
+	];
+
+	const bfs = (queue) => {
+		// Make a matrix to track visited and reachable
+		// false means we haven't visited the cell OR it isn't reachable
+		const reachable = Array(rows)
+			.fill(false)
+			.map((row) => Array(cols).fill(false));
+
+		while (queue.length > 0) {
+			const current = queue.shift();
+
+			reachable[current[0]][current[1]] = true;
+
+			directions.forEach((direction) => {
+				const newRow = current[0] + direction[0]; // i.e. 0 + 0 or 0 + -1
+				const newCol = current[1] + direction[1];
+
+				// if the adjacent row is in bounds
+				if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols) {
+					// if we haven't seen the adjacent cell yet
+					if (!reachable[newRow][newCol]) {
+						// if the adjacent cell matches our criteria
+						if (heights[newRow][newCol] >= heights[current[0]][current[1]]) {
+							// add the adjacent cell to the queue so we can process it as
+							// visited AND as a cell that can flow water into the ocean
+							queue.push([newRow, newCol]);
+						}
+					}
+				}
+			});
+		}
+
+		return reachable;
+	};
+
+	// get all cells that are adjacenst to each ocean
+	// Adds coords of adjacent cells NOT heights
+	// Start at the oceans, so we can search inward
+	for (let row = 0; row < rows; row += 1) {
+		// Add left side to pacific
+		pacificQueue.push([row, 0]);
+		// Add right side to atlantic
+		atlanticQueue.push([row, cols - 1]);
+	}
+
+	for (let col = 0; col < cols; col += 1) {
+		// add north side to pacific
+		pacificQueue.push([0, col]);
+		// add south side to atlantic
+		atlanticQueue.push([rows - 1, col]);
+	}
+
+	// bfs from each ocean
+	const pacificReachable = bfs(pacificQueue);
+	const atlanticReachable = bfs(atlanticQueue);
+
+	// find all cells that flow into both oceans
+	const commonCells = [];
+
+	for (let row = 0; row < rows; row += 1) {
+		for (let col = 0; col < cols; col += 1) {
+			if (pacificReachable[row][col] && atlanticReachable[row][col]) {
+				commonCells.push([row, col]);
+			}
+		}
+	}
+
+	return commonCells;
+};
+
+pacificAtlantic([
+	[1, 2, 2, 3, 5],
+	[3, 2, 3, 4, 4],
+	[2, 4, 5, 3, 1],
+	[6, 7, 1, 4, 5],
+	[5, 1, 1, 2, 4],
+]);

@@ -1,15 +1,32 @@
-var isPalindrome = (s) => {
-	const isAlphaNumeric = (char) =>
-		(char >= "a" && char <= "z") || (char >= "0" && char <= "9");
-	const inBounds = (i, j) => i <= j;
+const coinChangeDpExplained = (coins, amount) => {
+	const max = amount + 1;
 
-	for (let i = 0, j = s.length - 1; inBounds(i, j); i += 1, j -= 1) {
-		while (!isAlphaNumeric(s[j]) && inBounds(i, j - 1)) j -= 1;
-		while (!isAlphaNumeric(s[i]) && inBounds(i + 1, j)) i += 1;
+	/**
+      The minimum number of coins needed to make
+      the amount i.
+     */
+	const dp = Array(max).fill(max);
+	dp[0] = 0; // Can't have any amount of coins to make the amount 0.
 
-		if (s[i].toLowerCase() !== s[j].toLowerCase()) return false;
+	for (
+		let currTargetAmount = 1;
+		currTargetAmount <= amount;
+		currTargetAmount += 1
+	) {
+		for (const coin of coins) {
+			// if the current coin can be used for the current amount
+			if (coin <= currTargetAmount) {
+				const minNumCoinsToMakeTarget = dp[currTargetAmount];
+				const useCurrCoinForAmount = dp[currTargetAmount - coin] + 1;
+
+				dp[currTargetAmount] = Math.min(
+					minNumCoinsToMakeTarget,
+					useCurrCoinForAmount,
+				);
+			}
+		}
 	}
-	return true;
+	return dp[amount] > amount ? -1 : dp[amount];
 };
 
-isPalindrome("A man, a plan, a canal: Panama");
+coinChangeDpExplained([2], 3);

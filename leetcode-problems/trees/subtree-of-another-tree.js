@@ -18,6 +18,7 @@ const isSubtree = (root, subRoot) => {
 		return dfs(node.left) || dfs(node.right); // O(nodes)
 	};
 
+    // O(number of nodes)
 	const isSame = (node1, node2) => {
         /**
          * If one node is null, they both need to be.

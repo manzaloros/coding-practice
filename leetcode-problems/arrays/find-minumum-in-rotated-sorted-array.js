@@ -1,3 +1,33 @@
+/**
+ * 
+ we know value at mid, left, right
+
+ right half sorted (mid < right). Rotation point in left half:
+        
+ 01234, 34012, 40123, 
+
+ 
+ left half sorted (mid > right). Rotation point in right half:
+           l
+           m
+           r
+ 12340, 23401
+ */
+const findMinSimpler = (nums) => {
+	let left = 0;
+	let right = nums.length - 1;
+	while (left < right) {
+		const mid = left + Math.floor((right - left) / 2);
+		if (nums[mid] < nums[right]) {
+			// move left
+			right = mid;
+		} else {
+			left = mid + 1;
+		}
+	}
+	return nums[left];
+};
+
 /* Suppose an array of length n sorted in ascending order is rotated between 1
 and n times. For example, the array nums = [0,1,2,4,5,6,7] might become:
 
@@ -27,21 +57,21 @@ n == nums.length 1 <= n <= 5000 -5000 <= nums[i] <= 5000 All the integers of
 nums are unique.  nums is sorted and rotated between 1 and n times. */
 
 const findMin = (nums) => {
-  let left = 0;
-  let right = nums.length - 1;
+	let left = 0;
+	let right = nums.length - 1;
 
-  if (nums[right] >= nums[0]) return nums[0];
+	if (nums[right] >= nums[0]) return nums[0];
 
-  while (left <= right) {
-    const mid = Math.floor((left + right) / 2);
-    if (nums[mid] > nums[mid + 1]) return nums[mid + 1];
+	while (left <= right) {
+		const mid = Math.floor((left + right) / 2);
+		if (nums[mid] > nums[mid + 1]) return nums[mid + 1];
 
-    if (nums[mid - 1] > nums[mid]) return nums[mid];
+		if (nums[mid - 1] > nums[mid]) return nums[mid];
 
-    if (nums[mid] > nums[0]) {
-      left = mid + 1;
-    } else {
-      right = mid - 1;
-    }
-  }
+		if (nums[mid] > nums[0]) {
+			left = mid + 1;
+		} else {
+			right = mid - 1;
+		}
+	}
 };

@@ -1,24 +1,24 @@
 /**
  * Example:
- * 
+ *
  *         Least significant 1
  *              |_
  * n     : 1 1 0 1 0 0
  * n - 1 : 1 1 0 0 1 1
  *               |
  *               The least significant 1 place in n - 1 is always a 0.
- * 
+ *
  * So if you do n & (n - 1), you'll get
- * 
+ *
  *              was the least significant 1 place.
  *               |
  *         1 1 0 0 0 0
- * 
- * 
+ *
+ *
  * So, while your number (n) isn't 0,
- * 
+ *
  *  do n & (n - 1), which flips the least significant 1 to a zero, and increment count.
- * 
+ *
  * Then return your count, which represents the number of times you flipped the least significant
  * bit to 0.
  */
@@ -30,14 +30,24 @@ const hammingWeight = (n) => {
 	return count;
 };
 
+const hammingWeightAnother = (n) => {
+	let count = 0;
+
+	while (n !== 0) {
+		n = n & (n - 1);
+		count += 1;
+	}
+	return count;
+};
+
 /**
  * Init a bit mask of 1: 0001
  * Looping 0 to 32
  *   do an & of the mask and the number. Will give you the least significant bit of the number.
  *     If that is not 0, increment bits because we found a bit.
- * 
+ *
  *   Left shift the mask by 1, e.g. 0001 would become 0010.
- * 
+ *
  * Finally, return the number of bits we found.
  */
 var hammingWeightLoop32Times = (n) => {
